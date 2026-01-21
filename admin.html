@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1E293B"> <title>관리자 모드 (통합)</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #1E293B; color: #F1F5F9; }
+        
+        /* 탭 버튼 스타일 */
+        .tab-btn { 
+            flex: 1; padding: 14px; text-align: center; 
+            border-bottom: 3px solid #334155; 
+            color: #94A3B8; font-weight: 700; cursor: pointer; transition: all 0.2s; 
+        }
+        .tab-btn.active { 
+            border-bottom-color: #3B82F6; color: #3B82F6; background-color: #1e293b; 
+        }
+        
+        /* 섹션 표시/숨김 */
+        .content-section { display: none; }
+        .content-section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 입력 필드 */
+        input, textarea { 
+            background-color: #334155; border: 1px solid #475569; color: white; 
+            border-radius: 8px; padding: 10px; width: 100%; outline: none; transition: border 0.2s;
+        }
+        input:focus, textarea:focus { border-color: #3B82F6; ring: 2px solid rgba(59, 130, 246, 0.3); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4 pb-20">
+
+    <div class="max-w-md w-full bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 overflow-hidden">
+        
+        <div class="bg-slate-900 p-4 border-b border-slate-700 flex justify-between items-center">
+            <h1 class="text-lg font-black flex items-center gap-2 text-white">
+                <i data-lucide="shield-check" class="w-5 h-5 text-green-400"></i> 관리자 모드
+            </h1>
+            <a href="index.html" class="text-xs text-slate-400 hover:text-white flex items-center gap-1 font-bold">
+                홈으로 <i data-lucide="external-link" class="w-3 h-3"></i>
+            </a>
+        </div>
+
+        <div class="flex bg-slate-800">
+            <div onclick="switchTab('notice')" id="tab-notice" class="tab-btn active">📢 공지 올리기</div>
+            <div onclick="switchTab('room')" id="tab-room" class="tab-btn">🏠 방배정 & 공유</div>
+        </div>
+
+        <div id="sec-notice" class="content-section active p-6">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">공지 제목</label>
+                    <input type="text" id="noticeTitle" class="font-bold" placeholder="예: 📢 내일 조식 시간 변경">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">공지 내용</label>
+                    <textarea id="noticeMessage" rows="4" placeholder="내용을 입력하세요."></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">언제까지 띄울까요? (종료시간)</label>
+                    <input type="datetime-local" id="noticeExpiry">
+                </div>
+                <div class="flex items-center gap-3 pt-2 bg-slate-700/50 p-3 rounded-lg border border-slate-600">
+                    <input type="checkbox" id="isActive" class="w-5 h-5 accent-blue-500 rounded cursor-pointer" style="width: 20px;" checked>
+                    <label for="isActive" class="text-sm font-bold text-slate-200 cursor-pointer select-none">공지 즉시 게시하기</label>
+                </div>
+            </div>
+            
+            <hr class="border-slate-700 my-6">
+            
+            <button id="saveBtn" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-3.5 rounded-xl font-bold transition-colors flex items-center justify-center gap-2 shadow-lg">
+                <i data-lucide="upload-cloud" class="w-5 h-5"></i> 공지사항 저장/게시
+            </button>
+            <p id="statusMsg" class="text-xs text-center mt-3 text-slate-500 min-h-[20px] font-bold"></p>
+        </div>
+
+        <div id="sec-room" class="content-section p-6">
+            
+            <div class="bg-slate-700 p-4 rounded-xl mb-6 border border-slate-600">
+                <h3 class="font-bold text-yellow-400 text-xs mb-3 flex items-center gap-2">
+                    <i data-lucide="wifi" class="w-3 h-3"></i> 와이파이 정보 입력
+                </h3>
+                <div class="space-y-3">
+                    <input type="text" id="wifi-id" placeholder="ID 입력 (예: LeQu_Guest)">
+                    <input type="text" id="wifi-pw" placeholder="PW 입력 (예: lequ1234)">
+                </div>
+            </div>
+
+            <h3 class="font-bold text-slate-300 text-xs mb-3 flex items-center gap-2">
+                <i data-lucide="users" class="w-3 h-3"></i> 가족별 방 호수 입력
+            </h3>
+            
+            <div id="room-container" class="space-y-3 mb-6">
+            </div>
+
+            <div class="flex flex-col gap-3">
+                <button onclick="saveRoomInfo()" class="w-full bg-slate-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-slate-500 transition-colors flex items-center justify-center gap-2">
+                    <i data-lucide="save" class="w-4 h-4"></i> 내 폰에 저장해두기
+                </button>
+                <button onclick="shareKakao()" class="w-full bg-[#FEE500] text-[#191919] py-3.5 rounded-xl font-bold text-base hover:bg-[#FDD835] transition-colors shadow-lg flex items-center justify-center gap-2">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i> 텍스트 복사 (카톡 공유용)
+                </button>
+            </div>
+            <p id="roomStatusMsg" class="text-xs text-center mt-3 text-slate-500 min-h-[20px] font-bold"></p>
+        </div>
+
+    </div>
+
+    <script>
+        // 가족 이름 정의
+        const familyNames = ['1. 부모님', '2. 혜선이네', '3. 혜민이네', '4. 혜영이', '5. 선주네'];
+
+        // 탭 전환 함수
+        function switchTab(tabName) {
+            // 버튼 활성화
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            
+            // 섹션 활성화
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(`sec-${tabName}`).classList.add('active');
+        }
+
+        // 방 입력 필드 생성
+        function renderRooms() {
+            const container = document.getElementById('room-container');
+            let html = '';
+            familyNames.forEach((name, index) => {
+                html += `
+                    <div class="flex items-center gap-3 bg-slate-700/50 p-3 rounded-lg border border-slate-600">
+                        <span class="text-sm font-bold text-slate-300 w-24 shrink-0">${name}</span>
+                        <input type="number" id="num-${index}" class="flex-1 bg-slate-800 border border-slate-600 rounded p-2 text-center font-bold text-white focus:border-blue-500 outline-none" placeholder="호수">
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+            // 아이콘 새로고침 (lucide가 로드된 경우)
+            if(window.lucide) window.lucide.createIcons();
+        }
+
+        // 방 정보 저장 (LocalStorage)
+        function saveRoomInfo() {
+            const data = {
+                wifiId: document.getElementById('wifi-id').value,
+                wifiPw: document.getElementById('wifi-pw').value,
+                rooms: []
+            };
+            familyNames.forEach((_, index) => {
+                data.rooms.push(document.getElementById(`num-${index}`).value);
+            });
+            localStorage.setItem('okinawa_room_info', JSON.stringify(data));
+            
+            const msg = document.getElementById('roomStatusMsg');
+            msg.innerText = "✅ 저장되었습니다 (현재 기기에만 저장)";
+            msg.className = "text-xs text-center mt-3 text-green-400 font-bold";
+            setTimeout(() => msg.innerText = "", 2000);
+        }
+
+        // 방 정보 불러오기
+        function loadRoomInfo() {
+            const saved = localStorage.getItem('okinawa_room_info');
+            if (saved) {
+                const data = JSON.parse(saved);
+                if(data.wifiId) document.getElementById('wifi-id').value = data.wifiId;
+                if(data.wifiPw) document.getElementById('wifi-pw').value = data.wifiPw;
+                if(data.rooms) {
+                    data.rooms.forEach((num, index) => {
+                        const el = document.getElementById(`num-${index}`);
+                        if(el) el.value = num;
+                    });
+                }
+            }
+        }
+
+        // 카톡 공유 텍스트 생성 및 복사
+        function shareKakao() {
+            // 값 가져오기
+            const wifiId = document.getElementById('wifi-id').value.trim();
+            const wifiPw = document.getElementById('wifi-pw').value.trim();
+            
+            let text = "[🌴 오키나와 숙소 정보]\n\n";
+
+            // 와이파이 정보 추가
+            if (wifiId || wifiPw) {
+                text += "📶 와이파이\n";
+                if(wifiId) text += `ID : ${wifiId}\n`;
+                if(wifiPw) text += `PW : ${wifiPw}\n`;
+                text += "\n";
+            }
+
+            // 방 배정 정보 추가
+            text += "🏠 방 배정\n";
+            let hasRoomInfo = false;
+            familyNames.forEach((name, index) => {
+                const el = document.getElementById(`num-${index}`);
+                const num = el ? el.value.trim() : '';
+                if (num) {
+                    text += `${name} : ${num}호\n`;
+                    hasRoomInfo = true;
+                } else {
+                    text += `${name} : (미정)\n`;
+                }
+            });
+
+            // 클립보드 복사 시도
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showRoomToast("📋 복사 완료! 카톡방에 붙여넣으세요.");
+                }).catch(err => {
+                    // 실패시 fallback
+                    copyToClipboardFallback(text);
+                });
+            } else {
+                // 구형 브라우저 fallback
+                copyToClipboardFallback(text);
+            }
+        }
+
+        // 복사 실패 시 대체 함수 (textarea 사용)
+        function copyToClipboardFallback(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showRoomToast("📋 복사 완료! 카톡방에 붙여넣으세요.");
+            } catch (err) {
+                alert('복사 실패. 수동으로 입력해주세요.\n\n' + text);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function showRoomToast(message) {
+            const msg = document.getElementById('roomStatusMsg');
+            msg.innerText = message;
+            msg.className = "text-xs text-center mt-3 text-yellow-400 font-bold";
+            setTimeout(() => msg.innerText = "", 3000);
+        }
+
+        // 페이지 로드 시 초기화
+        window.addEventListener('DOMContentLoaded', () => {
+            renderRooms();
+            loadRoomInfo();
+            if(window.lucide) window.lucide.createIcons();
+        });
+    </script>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCTsBiqB4l1X-f_Bf7e0adCZtS_mmoYjWg",
+            authDomain: "okinawa-trip-2026-cdc54.firebaseapp.com",
+            projectId: "okinawa-trip-2026-cdc54",
+            storageBucket: "okinawa-trip-2026-cdc54.firebasestorage.app",
+            messagingSenderId: "775661354652",
+            appId: "1:775661354652:web:fb8f57bd60594a6d51f759",
+            measurementId: "G-KQSQPGBESP"
+        };
+
+        // Firebase 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // DOM 요소
+        const titleEl = document.getElementById('noticeTitle');
+        const msgEl = document.getElementById('noticeMessage');
+        const expiryEl = document.getElementById('noticeExpiry');
+        const activeEl = document.getElementById('isActive');
+        const statusEl = document.getElementById('statusMsg');
+        const saveBtn = document.getElementById('saveBtn');
+
+        // 기본 날짜 설정 (내일)
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(0, 0, 0, 0);
+        const pad = (n) => n < 10 ? '0' + n : n;
+        const defaultDate = `${tomorrow.getFullYear()}-${pad(tomorrow.getMonth() + 1)}-${pad(tomorrow.getDate())}T00:00`;
+
+        // 공지 불러오기
+        async function loadCurrentNotice() {
+            if(!statusEl) return;
+            statusEl.innerText = "데이터 로딩 중...";
+            try {
+                const docRef = doc(db, "notices", "latest");
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    titleEl.value = data.title || '';
+                    msgEl.value = data.message ? data.message.replace(/<br>/g, '\n') : '';
+                    expiryEl.value = data.expiryDate || defaultDate;
+                    activeEl.checked = data.isActive;
+                    statusEl.innerText = "";
+                } else {
+                    expiryEl.value = defaultDate;
+                    statusEl.innerText = "";
+                }
+            } catch (e) {
+                console.error(e);
+                statusEl.innerText = "불러오기 실패 (인터넷 확인 필요)";
+            }
+        }
+
+        // 공지 저장하기
+        if(saveBtn) {
+            saveBtn.addEventListener('click', async () => {
+                saveBtn.disabled = true;
+                const originalText = saveBtn.innerHTML;
+                saveBtn.innerHTML = `<i data-lucide="loader" class="w-5 h-5 animate-spin"></i> 저장 중...`;
+                if(window.lucide) window.lucide.createIcons();
+
+                try {
+                    const message = msgEl.value.replace(/\n/g, '<br>');
+                    const newId = 'notice_' + new Date().getTime(); 
+
+                    await setDoc(doc(db, "notices", "latest"), {
+                        title: titleEl.value,
+                        message: message,
+                        expiryDate: expiryEl.value,
+                        isActive: activeEl.checked,
+                        id: newId,
+                        updatedAt: new Date()
+                    });
+
+                    statusEl.className = "text-xs text-center mt-3 text-green-400 font-bold";
+                    statusEl.innerText = "✅ 공지사항이 앱에 반영되었습니다!";
+                    setTimeout(() => statusEl.innerText = "", 3000);
+                } catch (e) {
+                    console.error(e);
+                    statusEl.className = "text-xs text-center mt-3 text-red-400 font-bold";
+                    statusEl.innerText = "❌ 실패: " + e.message;
+                } finally {
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = originalText;
+                    if(window.lucide) window.lucide.createIcons();
+                }
+            });
+        }
+
+        // 초기 실행
+        loadCurrentNotice();
+    </script>
+
+</body>
+</html>

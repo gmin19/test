@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4F46E5"> <title>오키나와 가족 여행 - 전체 맵코드</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://www.gstatic.com">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #F8FAFC; color: #334155; -webkit-tap-highlight-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        button:active, a:active { transform: scale(0.98); }
+        .top-btn { position: fixed; bottom: 24px; right: 24px; z-index: 50; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; pointer-events: none; }
+        .top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        
+        /* 탭 버튼 (맛집 탭 스타일) */
+        .filter-btn { border: 1px solid #E2E8F0; color: #64748B; background: white; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; white-space: nowrap; transition: all 0.2s; }
+        .filter-btn.active { background-color: #4F46E5; color: white; border-color: #4F46E5; } /* Indigo-600 */
+
+        /* 카드 스타일 (맛집 탭 통일) */
+        .place-item {
+            background-color: white;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            height: 100%;
+        }
+        .place-item:active { transform: scale(0.98); background-color: #EEF2FF; }
+
+        /* 뱃지 스타일 */
+        .badge-tag { font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 2px; }
+        
+        /* 지역별 색상 */
+        .tag-north { color: #059669; background-color: #ECFDF5; } /* 북부: 초록 */
+        .tag-central { color: #EA580C; background-color: #FFF7ED; } /* 중부: 주황 */
+        .tag-south { color: #2563EB; background-color: #EFF6FF; } /* 남부: 파랑 */
+
+        /* 맵코드 박스 (가독성 강조) */
+        .mapcode-box {
+            background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px;
+            padding: 8px; text-align: center; margin-top: 8px; margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .mapcode-label { display: block; font-size: 10px; color: #94A3B8; font-weight: 700; margin-bottom: 2px; }
+        .mapcode-text { display: block; font-family: monospace; font-size: 18px; font-weight: 900; color: #1E293B; letter-spacing: -0.5px; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col pb-safe">
+
+    <header class="bg-indigo-600 text-white pt-10 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="flex justify-between items-start mb-6 mt-8">
+                <div class="flex-1 pr-2">
+                    <span class="text-indigo-200 font-bold text-xs mb-1 block">내비게이션 입력용</span>
+                    <h1 class="text-2xl md:text-3xl font-black leading-tight tracking-tight">
+                        오키나와 전체<br>
+                        <span class="text-yellow-300">맵코드</span> 모음
+                    </h1>
+                    <p class="text-indigo-100 text-xs mt-2 flex items-center gap-1">
+                        <i data-lucide="navigation" class="w-3 h-3"></i> 렌터카 내비게이션 & 구글맵 연동
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="absolute -right-4 -bottom-16 w-48 h-48 bg-indigo-500 rounded-full opacity-30 blur-3xl"></div>
+    </header>
+
+    <nav id="global-nav" class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm"></nav>
+
+    <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32 relative">
+
+        <div class="flex gap-2 overflow-x-auto no-scrollbar pb-4 mb-2 sticky top-[57px] z-40 bg-[#F8FAFC] pt-2">
+            <button onclick="filterMapcodes('all')" class="filter-btn active" id="btn-all">전체</button>
+            <button onclick="filterMapcodes('north')" class="filter-btn" id="btn-north">🌊 북부</button>
+            <button onclick="filterMapcodes('central')" class="filter-btn" id="btn-central">🎡 중부</button>
+            <button onclick="filterMapcodes('south')" class="filter-btn" id="btn-south">✈️ 남부</button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="mapcode-list">
+            </div>
+
+        <div id="global-apps-container" class="mt-8 pt-6 border-t border-slate-200 pb-10"></div>
+
+    </main>
+
+    <button onclick="scrollToTop()" id="top-btn" class="top-btn bg-indigo-600 text-white p-3 rounded-full shadow-xl hover:bg-indigo-700 transition-colors">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-5 py-3 rounded-full shadow-xl flex items-center gap-2 opacity-0 transition-opacity duration-300 pointer-events-none z-[100]">
+        <i data-lucide="check-circle-2" class="w-5 h-5 text-green-400"></i>
+        <span class="font-bold text-sm">맵코드가 복사되었습니다!</span>
+    </div>
+
+    <script type="module" src="common.js"></script>
+    
+    <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
+
+    <script>
+        // 데이터 베이스
+        const locations = [
+            // [숙소 & 렌터카]
+            { name: "레쿠 오키나와 (숙소)", category: "숙소", region: "central", mapcode: "33 525 594*3", googleQuery: "Lequ Okinawa Chatan Spa & Resort" },
+            { name: "유니버스 렌터카", category: "렌터카", region: "south", mapcode: "33 005 306*61", googleQuery: "ユニバースレンタカー那覇空港店 外車・輸入車専門" },
+
+            // [북부 관광지]
+            { name: "츄라우미 수족관", category: "관광", region: "north", mapcode: "553 075 797", googleQuery: "Okinawa Churaumi Aquarium" },
+            { name: "코우리 오션타워", category: "관광", region: "north", mapcode: "485 693 485*06", googleQuery: "Kouri Ocean Tower" },
+            { name: "나고 파인애플 파크", category: "관광", region: "north", mapcode: "206 716 467*82", googleQuery: "Nago Pineapple Park" },
+            { name: "네오 파크 오키나와", category: "관광", region: "north", mapcode: "206 653 842*55", googleQuery: "Neo Park Okinawa" },
+            { name: "만좌모", category: "관광", region: "north", mapcode: "206 312 097*55", googleQuery: "Manzamo" },
+
+            // [중부 관광지 & 쇼핑]
+            { name: "아메리칸 빌리지", category: "관광", region: "central", mapcode: "33 526 451*20", googleQuery: "American Village Okinawa" },
+            { name: "이온몰 라이카무", category: "쇼핑", region: "central", mapcode: "33 530 406*45", googleQuery: "AEON MALL Okinawa Rycom" },
+            { name: "파르코 시티", category: "쇼핑", region: "central", mapcode: "33 341 124*74", googleQuery: "San-A Urasoe West Coast PARCO CITY" },
+            { name: "동남식물원", category: "관광", region: "central", mapcode: "33 742 510*74", googleQuery: "Southeast Botanical Gardens" },
+            { name: "메가 돈키호테 기노완", category: "쇼핑", region: "central", mapcode: "33 434 024*44", googleQuery: "MEGA Don Quijote Ginowan" },
+            { name: "오카시고텐 (요미탄)", category: "쇼핑", region: "central", mapcode: "206 315 289*63", googleQuery: "Okashigoten Yomitan Main Shop" },
+            { name: "잔파곶 등대", category: "관광", region: "central", mapcode: "1005 685 326*43", googleQuery: "Cape Zanpa Lighthouse" },
+            { name: "류큐무라", category: "관광", region: "central", mapcode: "206 033 065*25", googleQuery: "Ryukyu Mura" },
+
+            // [남부 관광지 & 쇼핑]
+            { name: "우미카지 테라스", category: "관광", region: "south", mapcode: "33 002 602*06", googleQuery: "Senagajima Umikaji Terrace" },
+            { name: "오키나와 월드", category: "관광", region: "south", mapcode: "232 495 330*83", googleQuery: "Okinawa World" },
+            { name: "국제거리 (주차장)", category: "관광", region: "south", mapcode: "33 157 403*33", googleQuery: "Technical Park Makishi 3rd" },
+            { name: "아시비나 아울렛", category: "쇼핑", region: "south", mapcode: "232 544 452*22", googleQuery: "Okinawa Outlet Mall Ashibinaa" },
+            { name: "이아스 오키나와", category: "쇼핑", region: "south", mapcode: "232 543 400*25", googleQuery: "iias Okinawa Toyosaki" },
+            { name: "만화창고 (나하점)", category: "쇼핑", region: "south", mapcode: "33 064 552*55", googleQuery: "Manga Souko Naha" },
+            { name: "슈리성 공원", category: "관광", region: "south", mapcode: "33 161 526*66", googleQuery: "Shurijo Castle Park" },
+            { name: "야치문 거리", category: "쇼핑", region: "south", mapcode: "33 158 123*44", googleQuery: "Tsuboya Yachimun Street" },
+        ];
+
+        function renderMapcodes(filter) {
+            const container = document.getElementById('mapcode-list');
+            container.innerHTML = '';
+
+            const filtered = filter === 'all' ? locations : locations.filter(item => item.region === filter);
+
+            filtered.forEach(item => {
+                // 지역 뱃지 스타일
+                let regionLabel = '';
+                let regionClass = '';
+                
+                if (item.region === 'north') { regionLabel = '북부'; regionClass = 'tag-north'; }
+                else if (item.region === 'central') { regionLabel = '중부'; regionClass = 'tag-central'; }
+                else { regionLabel = '남부'; regionClass = 'tag-south'; }
+
+                // [수정됨] 구글맵 검색 URL 수정
+                const googleMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.googleQuery)}`;
+
+                const html = `
+                    <div class="place-item" onclick="window.open('${googleMapUrl}', '_blank')">
+                        <div>
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="badge-tag ${regionClass}">${regionLabel}</span>
+                                <span class="text-[10px] font-bold text-slate-400 bg-slate-50 px-2 py-0.5 rounded">${item.category}</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-sm mt-1">${item.name}</h3>
+                            
+                            <div class="mapcode-box" onclick="event.stopPropagation(); copyToClipboard('${item.mapcode}')">
+                                <span class="mapcode-label">내비게이션 입력</span>
+                                <span class="mapcode-text">${item.mapcode}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-1 pt-2 border-t border-slate-50 flex justify-end">
+                            <span class="text-[11px] font-bold text-blue-500 flex items-center gap-1">
+                                구글맵 보기 <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+                            </span>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+            
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function filterMapcodes(type) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${type}`).classList.add('active');
+            renderMapcodes(type);
+        }
+
+        // 초기 렌더링
+        renderMapcodes('all');
+    </script>
+
+</body>
+</html>

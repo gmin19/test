@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3B82F6">
+
+    <title>오키나와 가족 여행 - 숙소</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://www.gstatic.com">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #F8FAFC; color: #334155; -webkit-tap-highlight-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* 정보 카드 스타일 */
+        .info-card {
+            background-color: white;
+            border: 1px solid #E2E8F0;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        
+        /* 섹션 타이틀 */
+        .section-title {
+            font-size: 16px; font-weight: 800; color: #1E293B; margin-bottom: 12px;
+            display: flex; align-items: center; gap: 6px;
+        }
+
+        /* 강조 박스 (파란색) */
+        .highlight-box {
+            background-color: #EFF6FF; border: 1px solid #DBEAFE; color: #1E40AF;
+            border-radius: 8px; padding: 12px; font-size: 13px; font-weight: 500; line-height: 1.6;
+        }
+        /* 주의 박스 (빨간색) */
+        .alert-box {
+            background-color: #FEF2F2; border: 1px solid #FECACA; color: #B91C1C;
+            border-radius: 8px; padding: 12px; font-size: 13px; font-weight: 500; line-height: 1.6;
+            margin-top: 8px;
+        }
+
+        /* 뱃지 */
+        .badge-price { background-color: #FFF7ED; color: #C2410C; border: 1px solid #FFEDD5; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+
+        /* 버튼 스타일 */
+        .btn-action {
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            width: 100%; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 13px;
+            transition: all 0.2s; cursor: pointer;
+        }
+        .btn-google { background-color: #F1F5F9; color: #475569; border: 1px solid #E2E8F0; }
+        .btn-tel { background-color: #ECFDF5; color: #059669; border: 1px solid #D1FAE5; }
+
+        .top-btn { position: fixed; bottom: 24px; right: 24px; z-index: 50; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; pointer-events: none; }
+        .top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col pb-safe">
+
+    <header class="bg-violet-600 text-white pt-10 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="flex justify-between items-start mb-6 mt-8">
+                <div class="flex-1 pr-2">
+                    <span class="text-violet-200 font-bold text-xs mb-1 block">3박 4일 우리 집</span>
+                    <h1 class="text-2xl md:text-3xl font-black leading-tight tracking-tight">
+                        레쿠 오키나와<br>
+                        <span class="text-violet-200">차탄 스파 & 리조트</span>
+                    </h1>
+                    <p class="text-violet-100 text-xs mt-2">LeQu Okinawa Chatan Spa & Resort</p>
+                </div>
+            </div>
+        </div>
+        <div class="absolute -right-4 -bottom-16 w-48 h-48 bg-violet-500 rounded-full opacity-30 blur-3xl"></div>
+    </header>
+
+    <nav id="global-nav" class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm"></nav>
+
+    <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32 relative">
+
+        <div class="info-card">
+            <div class="grid grid-cols-2 gap-4 mb-4 text-center">
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                    <span class="text-xs text-slate-400 font-bold block mb-1">체크인</span>
+                    <span class="text-lg font-black text-slate-800">14:00</span>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                    <span class="text-xs text-slate-400 font-bold block mb-1">체크아웃</span>
+                    <span class="text-lg font-black text-slate-800">11:00</span>
+                </div>
+            </div>
+            
+            <div class="space-y-2">
+                <a href="tel:+81989362288" class="btn-action btn-tel">
+                    <i data-lucide="phone" class="w-4 h-4"></i> 프론트: +81-98-936-2288
+                </a>
+                <div class="flex gap-2">
+                    <a href="https://very.travel/ko/top?bot_id=244001" target="_blank" class="btn-action btn-google">
+                        <i data-lucide="book-open" class="w-4 h-4 text-violet-500"></i> 호텔 한국어 안내
+                    </a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Lequ+Okinawa+Chatan+Spa+Resort" target="_blank" class="btn-action btn-google">
+                        <i data-lucide="map" class="w-4 h-4"></i> 구글맵
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <h2 class="section-title"><i data-lucide="sparkles" class="w-5 h-5 text-violet-500"></i> 주요 시설 (8층)</h2>
+            <div class="space-y-6">
+                
+                <div>
+                    <h3 class="text-sm font-bold text-slate-800 mb-1 flex items-center gap-2">
+                        ♨️ 대욕장 (천연 온천)
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-2">지하 1,400m 천연 온천. 여행 피로 풀기에 최고!</p>
+                    <div class="alert-box">
+                        <ul class="list-disc pl-4 space-y-1">
+                            <li>입장 시 <strong>대욕장 티켓</strong> 필수 지참</li>
+                            <li><strong>여탕 입장 시:</strong> 체크인 때 받은 <span class="text-red-600 font-bold">비밀번호</span>가 반드시 필요합니다.</li>
+                            <li><span class="text-red-600 font-bold">문신(타투)</span>이 있는 경우 입장이 제한될 수 있습니다. (단, 스티커로 가려지는 경우 가능)</li>
+                            <li><strong>병우유(흰/커피우유) 자판기:</strong> 1병 150엔 (동전/잔돈 필수!)</li>
+                        </ul>
+                    </div>
+                    <p class="text-xs text-violet-600 mt-2 font-bold flex items-center gap-1">
+                        <i data-lucide="clock" class="w-3 h-3"></i> 06:00~10:00 / 15:00~01:00
+                    </p>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <div>
+                    <h3 class="text-sm font-bold text-slate-800 mb-1 flex items-center gap-2">
+                        🏊 루프탑 수영장 <span class="badge-price">유료</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-2">바다가 보이는 인피니티 풀 (시즌 운영)</p>
+                    <div class="highlight-box">
+                        <p class="font-bold mb-1">🎟️ 이용 요금</p>
+                        <ul class="list-disc pl-4 space-y-1">
+                            <li>성인: 2,000엔 / 소인(6~12세): 1,000엔</li>
+                            <li>5세 이하: 무료</li>
+                        </ul>
+                    </div>
+                    <p class="text-xs text-violet-600 mt-2 font-bold flex items-center gap-1">
+                        <i data-lucide="clock" class="w-3 h-3"></i> 08:00~20:00 (7~9월은 22시까지)
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <h2 class="section-title"><i data-lucide="utensils" class="w-5 h-5 text-orange-500"></i> 조식 뷔페 (2층)</h2>
+            <p class="text-xs text-slate-500 leading-relaxed mb-3">
+                오키나와 향토 요리부터 양식까지. 직접 만들어 먹는 '오키나와 소바'와 '해산물 덮밥' 추천!
+            </p>
+            <div class="alert-box">
+                <i data-lucide="ticket" class="w-3 h-3 inline mr-1"></i> 입장 시 <strong>조식 쿠폰</strong>을 꼭 지참해주세요.
+            </div>
+            <p class="text-xs text-slate-400 mt-2 font-medium">
+                ⏰ 07:00 ~ 10:30 (입장 마감 10:00)
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h2 class="section-title"><i data-lucide="building-2" class="w-5 h-5 text-slate-500"></i> 편의 시설 & 서비스</h2>
+            <div class="space-y-3">
+                
+                <div class="flex gap-3 items-start">
+                    <div class="bg-orange-100 p-2 rounded-lg text-orange-600"><i data-lucide="cup-soda" class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-800">웰컴 드링크 서비스</h4>
+                        <p class="text-xs text-slate-500">
+                            <strong>1층 로비</strong>에서 무료 음료(아이스바 등)를 제공합니다.<br>
+                            <span class="text-blue-600 font-bold">⏰ 14:00 ~ 21:00</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 items-start">
+                    <div class="bg-slate-100 p-2 rounded-lg text-slate-600"><i data-lucide="car" class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-800">주차장 (무료)</h4>
+                        <p class="text-xs text-slate-500">호텔 주차 타워 이용.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 items-start">
+                    <div class="bg-blue-100 p-2 rounded-lg text-blue-600"><i data-lucide="store" class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-800">로손 편의점 (Lawson)</h4>
+                        <p class="text-xs text-slate-500">호텔 <strong>1층</strong>에 위치. 간식 사기 편리합니다.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 items-start">
+                    <div class="bg-yellow-100 p-2 rounded-lg text-yellow-600"><i data-lucide="baby" class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-800">키즈 어메니티 대여</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            <strong>로비에 문의</strong>하여 다음 물품을 대여할 수 있습니다:<br>
+                            베이비 가드, 아기 침대, 유모차, 기저귀 쓰레기통, 아기 욕조, 어린이 발받침
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 items-start">
+                    <div class="bg-green-100 p-2 rounded-lg text-green-600"><i data-lucide="shirt" class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-800">편의 시설</h4>
+                        <ul class="text-xs text-slate-500 list-disc pl-4 mt-1 space-y-1">
+                            <li><strong>코인 세탁실:</strong> 2층 <span class="text-blue-600 font-bold">(객실 TV로 혼잡도 확인 가능)</span></li>
+                            
+                            <li class="mt-1"><strong>자판기:</strong> 메인동 2·6층 / 프리미어동 6층</li>
+                            <li><strong>제빙기:</strong> 메인동 2·4층</li>
+                            <li><strong>전자레인지:</strong> 메인동 4층</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-2">
+                    <div class="highlight-box flex items-start gap-2">
+                        <i data-lucide="leaf" class="w-4 h-4 text-green-600 mt-0.5 shrink-0"></i>
+                        <div>
+                            <p class="font-bold text-green-800 mb-1">연박 시 청소 안내 (에코 클린)</p>
+                            <ul class="list-disc pl-4 text-xs text-green-700 space-y-1">
+                                <li>환경 보호를 위해 <strong>타월 교체 및 쓰레기 수거</strong>만 매일 진행됩니다.</li>
+                                <li><strong>전체 청소</strong>는 4박째마다 1회 실시됩니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="global-apps-container" class="mt-8 pt-6 border-t border-slate-200 pb-10"></div>
+
+    </main>
+
+    <button onclick="scrollToTop()" id="top-btn" class="top-btn bg-violet-600 text-white p-3 rounded-full shadow-xl hover:bg-violet-700 transition-colors">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-5 py-3 rounded-full shadow-xl flex items-center gap-2 opacity-0 transition-opacity duration-300 pointer-events-none z-[100]">
+        <i data-lucide="check-circle-2" class="w-5 h-5 text-green-400"></i>
+        <span class="font-bold text-sm">복사되었습니다!</span>
+    </div>
+
+    <script type="module" src="common.js"></script>
+    
+    <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
+
+</body>
+</html>
