@@ -38,17 +38,17 @@
             text-decoration: none;
             position: relative;
             overflow: hidden;
-            min-height: 95px; /* 높이 약간 확보 */
+            min-height: 95px;
         }
         .menu-card:active { transform: scale(0.96); background-color: #F8FAFC; }
         
-        /* [수정됨] 아이콘 박스: 이모지 완벽한 중앙 정렬 */
+        /* 아이콘 박스: 이모지 완벽한 중앙 정렬 */
         .icon-box {
             width: 38px; height: 38px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center; /* Flexbox 중앙 정렬 */
+            display: flex; align-items: center; justify-content: center;
             margin-bottom: 8px;
-            padding: 0; /* 패딩 제거 */
-            line-height: 1; /* 라인 높이 초기화 */
+            padding: 0;
+            line-height: 1;
         }
         .icon-box i { width: 20px; height: 20px; }
 
@@ -116,7 +116,7 @@
                     <i data-lucide="utensils"></i>
                 </div>
                 <h3 class="font-bold text-slate-700 text-xs">맛집 정보</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">예약 & 메뉴</p>
+                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">아메리칸 빌리지 맛집</p>
             </a>
 
             <a href="place.html" class="menu-card">
@@ -148,7 +148,7 @@
                     <i data-lucide="car"></i>
                 </div>
                 <h3 class="font-bold text-slate-700 text-xs">렌터카</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">운전법 & 사고대처</p>
+                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">사고대처</p>
             </a>
 
             <a href="talk.html" class="menu-card">
@@ -172,7 +172,7 @@
                     <i data-lucide="siren"></i>
                 </div>
                 <h3 class="font-bold text-red-600 text-xs">긴급 연락</h3>
-                <p class="text-[9px] text-red-400 leading-tight mt-0.5">병원/영사관</p>
+                <p class="text-[9px] text-red-400 leading-tight mt-0.5">경찰서/영사관</p>
             </a>
 
             <a href="decalogue.html" class="menu-card col-span-3 flex-row gap-3 h-auto py-3 items-center justify-start px-4 bg-emerald-50/50 border-emerald-100">
@@ -195,13 +195,13 @@
     <script type="module" src="common.js"></script>
 
     <script>
-        // [추가됨] 관리자 접속 비밀번호 확인 함수
+        // [수정됨] 비밀번호 'gggg'로 변경
         function checkAdmin() {
             const password = prompt("관리자 비밀번호를 입력하세요 (4자리)");
             
-            if (password === "5555") {
+            if (password === "gggg") {
                 location.href = "admin.html";
-            } else if (password !== null) { // 취소 버튼을 누르지 않았는데 틀린 경우
+            } else if (password !== null) { 
                 alert("비밀번호가 일치하지 않습니다.");
             }
         }
