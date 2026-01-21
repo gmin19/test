@@ -22,11 +22,11 @@
     <style>
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #F1F5F9; color: #1E293B; -webkit-tap-highlight-color: transparent; }
         
-        /* [수정됨] 메뉴 카드 스타일: 더 컴팩트하게 */
+        /* 메뉴 카드 스타일 */
         .menu-card {
             background-color: white; 
             border-radius: 16px; 
-            padding: 14px 8px; /* 패딩 축소 */
+            padding: 14px 8px;
             box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
             border: 1px solid #E2E8F0;
             display: flex; 
@@ -38,17 +38,19 @@
             text-decoration: none;
             position: relative;
             overflow: hidden;
-            min-height: 90px; /* 최소 높이 지정 */
+            min-height: 95px; /* 높이 약간 확보 */
         }
         .menu-card:active { transform: scale(0.96); background-color: #F8FAFC; }
         
-        /* [수정됨] 아이콘 박스 축소 */
+        /* [수정됨] 아이콘 박스: 이모지 완벽한 중앙 정렬 */
         .icon-box {
-            width: 36px; height: 36px; border-radius: 12px;
-            display: flex; items-center; justify-center; margin-bottom: 8px;
-            margin-top: 2px;
+            width: 38px; height: 38px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; /* Flexbox 중앙 정렬 */
+            margin-bottom: 8px;
+            padding: 0; /* 패딩 제거 */
+            line-height: 1; /* 라인 높이 초기화 */
         }
-        .icon-box i { width: 20px; height: 20px; } /* 아이콘 크기 조절 */
+        .icon-box i { width: 20px; height: 20px; }
 
         /* 날씨 위젯 스타일 */
         .weather-widget {
@@ -68,9 +70,9 @@
                 <p class="text-slate-500 text-[11px] font-bold mb-0.5">2026.04.02 ~ 04.05</p>
                 <h1 class="text-xl font-black text-slate-800">오키나와 가족 여행 ✈️</h1>
             </div>
-            <a href="admin.html" class="bg-slate-200 p-2 rounded-full text-slate-600">
+            <button onclick="checkAdmin()" class="bg-slate-200 p-2 rounded-full text-slate-600 focus:outline-none active:bg-slate-300 transition-colors">
                 <i data-lucide="settings" class="w-4 h-4"></i>
-            </a>
+            </button>
         </div>
 
         <div class="weather-widget">
@@ -106,7 +108,7 @@
                     <i data-lucide="calendar-days"></i>
                 </div>
                 <h3 class="font-bold text-slate-700 text-xs">전체 일정</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">3박 4일</p>
+                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">3박 4일 상세</p>
             </a>
 
             <a href="dining.html" class="menu-card">
@@ -114,7 +116,7 @@
                     <i data-lucide="utensils"></i>
                 </div>
                 <h3 class="font-bold text-slate-700 text-xs">맛집 정보</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">예약 & 추천</p>
+                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">예약 & 메뉴</p>
             </a>
 
             <a href="place.html" class="menu-card">
@@ -122,7 +124,7 @@
                     <i data-lucide="palmtree"></i>
                 </div>
                 <h3 class="font-bold text-slate-700 text-xs">관광지</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">핫플레이스</p>
+                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">북부/중부/남부</p>
             </a>
 
             <a href="shopping.html" class="menu-card">
@@ -130,7 +132,7 @@
                     <i data-lucide="shopping-bag"></i>
                 </div>
                 <h3 class="font-bold text-slate-700 text-xs">쇼핑 리스트</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">돈키호테</p>
+                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">선물 & 할인</p>
             </a>
 
             <a href="mapcode.html" class="menu-card">
@@ -138,7 +140,7 @@
                     <i data-lucide="map-pin"></i>
                 </div>
                 <h3 class="font-bold text-slate-700 text-xs">맵코드</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">내비 입력용</p>
+                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">내비게이션 입력</p>
             </a>
 
             <a href="car.html" class="menu-card">
@@ -146,7 +148,7 @@
                     <i data-lucide="car"></i>
                 </div>
                 <h3 class="font-bold text-slate-700 text-xs">렌터카</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">운전 팁</p>
+                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">운전법 & 사고대처</p>
             </a>
 
             <a href="talk.html" class="menu-card">
@@ -154,7 +156,7 @@
                     <i data-lucide="message-circle"></i>
                 </div>
                 <h3 class="font-bold text-slate-700 text-xs">일본어</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">필수 회화</p>
+                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">상황별 회화</p>
             </a>
 
             <a href="lawson.html" class="menu-card">
@@ -162,7 +164,7 @@
                     <i data-lucide="store"></i>
                 </div>
                 <h3 class="font-bold text-slate-700 text-xs">로손 편의점</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">추천 간식</p>
+                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">추천템 & 이용팁</p>
             </a>
 
             <a href="emergency.html" class="menu-card bg-red-50/50 border-red-100">
@@ -170,7 +172,7 @@
                     <i data-lucide="siren"></i>
                 </div>
                 <h3 class="font-bold text-red-600 text-xs">긴급 연락</h3>
-                <p class="text-[9px] text-red-400 leading-tight mt-0.5">SOS</p>
+                <p class="text-[9px] text-red-400 leading-tight mt-0.5">병원/영사관</p>
             </a>
 
             <a href="decalogue.html" class="menu-card col-span-3 flex-row gap-3 h-auto py-3 items-center justify-start px-4 bg-emerald-50/50 border-emerald-100">
@@ -185,11 +187,26 @@
             </a>
 
         </div>
+
+        <div id="global-apps-container" class="mt-4 pt-6 border-t border-slate-200"></div>
+
     </main>
 
     <script type="module" src="common.js"></script>
 
     <script>
+        // [추가됨] 관리자 접속 비밀번호 확인 함수
+        function checkAdmin() {
+            const password = prompt("관리자 비밀번호를 입력하세요 (4자리)");
+            
+            if (password === "5555") {
+                location.href = "admin.html";
+            } else if (password !== null) { // 취소 버튼을 누르지 않았는데 틀린 경우
+                alert("비밀번호가 일치하지 않습니다.");
+            }
+        }
+
+        // 실시간 네비게이션 함수
         function openRealTimeNavi(destinationName) {
             const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destinationName)}&travelmode=driving`;
             window.open(url, '_blank');
