@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <!-- 검색 엔진 수집 차단 (Google, Naver 등) -->
     <meta name="robots" content="noindex, nofollow">
     <meta name="googlebot" content="noindex">
@@ -79,43 +79,142 @@
             margin-left: 0.75rem;
         }
         
-        /* 인쇄 시 숨김 처리 */
+        /* 아이폰 하단 안전 영역 대응 */
+        .safe-area-bottom {
+            padding-bottom: constant(safe-area-inset-bottom); /* iOS 11.0 */
+            padding-bottom: env(safe-area-inset-bottom); /* iOS 11.2+ */
+        }
+
+        /* [인쇄 최적화 스타일] PDF 저장 및 인쇄 시 적용 */
         @media print {
-            .no-print {
-                display: none !important;
+            @page {
+                size: A4;
+                margin: 10mm 15mm; /* 상하 10mm, 좌우 15mm 여백 */
             }
             body {
                 background-color: white;
+                font-size: 10pt; /* 폰트 사이즈 축소 */
+                color: black;
+                line-height: 1.3;
             }
             .max-w-4xl {
-                box-shadow: none;
-                margin: 0;
-                width: 100%;
-                max-width: 100%;
+                width: 100% !important;
+                max-width: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
             }
-            /* 인쇄 시 입력창 테두리 제거 및 텍스트만 보이게 조정 */
-            input, textarea {
-                border: none;
-                padding: 0;
+            /* 인쇄 시 숨길 요소들 */
+            .no-print, .thumb-icon, .info-box, button, #toast, .fixed, .sticky {
+                display: none !important;
+            }
+            /* 섹션 간격 줄임 */
+            form {
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            section {
+                margin-bottom: 1rem !important; /* 섹션 간격 축소 */
+                page-break-inside: avoid; /* 섹션 중간에 페이지 끊김 방지 */
+                padding-bottom: 0 !important;
+            }
+            .space-y-8 > :not([hidden]) ~ :not([hidden]) {
+                margin-top: 1rem !important; /* Tailwind space-y 축소 */
+            }
+            .section-header {
+                margin-bottom: 0.5rem !important;
+                padding-bottom: 0.25rem !important;
+                border-bottom: 1px solid #dc2626 !important; /* 테두리 얇게 */
+                font-size: 12pt !important;
+            }
+            /* 그리드 레이아웃 강제 (2열 유지) */
+            .grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 0.75rem !important;
+            }
+            .col-span-2, .md\:col-span-2 {
+                grid-column: span 2 / span 2 !important;
+            }
+            /* 입력 그룹 간격 축소 */
+            .input-group {
+                margin-bottom: 0.5rem !important;
+                page-break-inside: avoid;
+            }
+            /* 라벨 폰트 축소 */
+            label {
+                font-size: 9pt !important;
+                margin-bottom: 0.1rem !important;
+            }
+            /* 입력창 스타일 간소화 (잉크 절약) */
+            input[type="text"], input[type="number"], input[type="date"], textarea, select {
+                border: 1px solid #999 !important;
+                background-color: transparent !important;
+                border-radius: 4px !important;
+                padding: 2px 4px !important;
+                font-size: 10pt !important;
+                height: auto !important;
+                box-shadow: none !important;
+                min-height: 0 !important;
+            }
+            textarea {
+                resize: none;
+                height: 4rem !important; /* 메모장 높이 고정 */
+            }
+            /* 배경색 제거 */
+            .bg-gray-50, .bg-white {
+                background-color: transparent !important;
+                border: none !important;
+            }
+            /* 체크박스/라디오 그룹 정렬 */
+            .flex-col {
+                flex-direction: row !important; /* 세로 배열을 가로로 변경하여 공간 절약 */
+                flex-wrap: wrap;
+            }
+            .flex-col > * {
+                margin-right: 1rem;
+                margin-bottom: 0.25rem;
+            }
+            /* 로고 등 헤더 처리 */
+            .print-header {
+                display: block !important;
+                text-align: center;
+                margin-bottom: 1rem;
+                border-bottom: 2px solid #333;
+                padding-bottom: 0.5rem;
+            }
+            .print-header h1 {
+                font-size: 16pt;
+                font-weight: bold;
             }
         }
     </style>
 </head>
 <body class="bg-gray-100">
 
-    <div class="max-w-4xl mx-auto bg-white shadow-lg min-h-screen md:min-h-0 md:rounded-lg md:my-8 overflow-hidden">
+    <div class="max-w-4xl mx-auto bg-white shadow-lg min-h-screen md:min-h-0 md:rounded-lg md:my-8 overflow-hidden flex flex-col relative">
         <!-- Header -->
-        <div class="bg-gray-800 text-white p-5 md:p-6 sticky top-0 z-10 shadow-md no-print">
-            <h1 class="text-xl md:text-3xl font-bold mb-1">KABELSCHLEPP 체크리스트</h1>
-            <p class="text-gray-400 text-xs md:text-sm">현장 확인용 모바일 최적화 양식</p>
+        <div class="bg-gray-800 text-white p-4 md:p-6 sticky top-0 z-20 shadow-md no-print flex justify-between items-center">
+            <div>
+                <h1 class="text-lg md:text-3xl font-bold mb-1">KABELSCHLEPP 체크리스트</h1>
+                <p class="text-gray-400 text-xs md:text-sm">현장 확인용 모바일 최적화 양식</p>
+            </div>
+            <!-- Top Action Button (Reset) for easy access -->
+            <button onclick="resetForm()" class="text-gray-300 hover:text-white p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+            </button>
         </div>
         
         <!-- Print Only Header -->
-        <div class="hidden print:block p-6 text-center border-b-2 border-red-600 mb-4">
-            <h1 class="text-2xl font-bold">KABELSCHLEPP Drag Chain 현장 체크리스트</h1>
+        <div class="hidden print:block print-header">
+            <h1>KABELSCHLEPP Drag Chain 현장 체크리스트</h1>
+            <p style="font-size: 10pt; color: #555;">작성일: <span id="printDate"></span></p>
         </div>
 
-        <form id="checklistForm" class="p-5 md:p-8 space-y-8">
+        <!-- Form Container -->
+        <form id="checklistForm" class="p-4 md:p-8 space-y-8 flex-grow">
             
             <!-- 1. 기본 정보 -->
             <section>
@@ -123,7 +222,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div class="input-group">
                         <label class="block text-sm font-medium text-gray-700 mb-1">점검 일자</label>
-                        <input type="date" id="checkDate" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
+                        <input type="date" id="checkDate" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all bg-gray-50">
                     </div>
                     <div class="input-group">
                         <label class="block text-sm font-medium text-gray-700 mb-1">설비명 / 라인명</label>
@@ -139,24 +238,24 @@
             <!-- 2. 치수 및 외형 정보 -->
             <section>
                 <h2 class="text-lg md:text-xl font-bold text-gray-800 section-header">2. 치수 및 외형 정보</h2>
-                <p class="mb-4 text-sm text-gray-600 no-print">설치 공간 또는 기존 제품을 실측하여 기입합니다. 아이콘을 클릭하면 도면을 확대할 수 있습니다.</p>
+                <p class="mb-4 text-sm text-gray-600 no-print">아이콘을 터치하면 상세 도면을 확대할 수 있습니다.</p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <!-- 내폭 (Inner Width) -->
                     <div class="input-group">
-                        <div class="flex items-center mb-1">
+                        <div class="flex items-center mb-1 justify-between">
                             <label class="text-sm font-medium text-gray-700">내폭 (<span class="math-symbol">Bi</span>) (mm)</label>
                             <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_Inner-width.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
                         </div>
                         <input type="number" inputmode="decimal" id="bi" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all" placeholder="숫자만 입력">
-                        <div class="info-box no-print">
+                        <div class="info-box no-print text-xs">
                             케이블이 놓일 <strong>실제 내부 너비</strong>입니다.
                         </div>
                     </div>
 
                     <!-- 외폭 (Outer Width) -->
                     <div class="input-group">
-                        <div class="flex items-center mb-1">
+                        <div class="flex items-center mb-1 justify-between">
                             <label class="text-sm font-medium text-gray-700">외폭 (<span class="math-symbol">Ba</span>) (mm)</label>
                             <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_Outer-width.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
                         </div>
@@ -165,7 +264,7 @@
 
                     <!-- 내측 높이 (Inner Height) -->
                     <div class="input-group">
-                        <div class="flex items-center mb-1">
+                        <div class="flex items-center mb-1 justify-between">
                             <label class="text-sm font-medium text-gray-700">내측 높이 (<span class="math-symbol">hi</span>) (mm)</label>
                             <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_Inner-height.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
                         </div>
@@ -174,7 +273,7 @@
 
                     <!-- 외측 높이 (Outer Height) -->
                     <div class="input-group">
-                        <div class="flex items-center mb-1">
+                        <div class="flex items-center mb-1 justify-between">
                             <label class="text-sm font-medium text-gray-700">외측 높이 (<span class="math-symbol">ha</span>) (mm)</label>
                             <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_Outer-height.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
                         </div>
@@ -183,36 +282,36 @@
 
                     <!-- 곡률 반경 (Bending Radius) -->
                     <div class="input-group">
-                        <div class="flex items-center mb-1">
+                        <div class="flex items-center mb-1 justify-between">
                             <label class="text-sm font-medium text-gray-700">곡률 반경 (<span class="math-symbol">KR</span>) (mm)</label>
                             <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_bending-radius.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
                         </div>
                         <input type="number" inputmode="decimal" id="kr" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
-                        <div class="info-box no-print">
+                        <div class="info-box no-print text-xs">
                             모를 경우 우측의 <strong>전체 높이(H)</strong>를 측정하세요.
                         </div>
                     </div>
 
                     <!-- 전체 높이 (H) -->
                     <div class="input-group">
-                        <div class="flex items-center mb-1">
+                        <div class="flex items-center mb-1 justify-between">
                             <label class="text-sm font-medium text-gray-700">Drag Chain 전체 높이 (<span class="math-symbol">H</span>) (mm)</label>
                             <img src="https://onlineengineer.de/img/groups_info/group_info_einbaumasse.png" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
                         </div>
                         <input type="number" inputmode="decimal" id="totalHeight" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
-                        <div class="info-box no-print">
+                        <div class="info-box no-print text-xs">
                             설치 상태에서 바닥부터 최고점까지의 높이입니다. (KR 추산용)
                         </div>
                     </div>
 
                     <!-- 피치 (Pitch) -->
                     <div class="input-group md:col-span-2">
-                        <div class="flex items-center mb-1">
+                        <div class="flex items-center mb-1 justify-between">
                             <label class="text-sm font-medium text-gray-700">피치 (<span class="math-symbol">P</span>) (mm)</label>
                             <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_pitch.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
                         </div>
                         <input type="number" inputmode="decimal" id="pitch" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
-                        <div class="info-box no-print">
+                        <div class="info-box no-print text-xs">
                             핀과 핀 사이, 즉 <strong>링크 중심에서 다음 링크 중심간의 거리</strong>입니다.
                         </div>
                     </div>
@@ -220,22 +319,22 @@
                     <!-- 크로스바 배열 (Stay Arrangement) -->
                     <div class="input-group md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-2">크로스바 배열 (Stay Arrangement)</label>
-                        <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-3 sm:space-y-0 bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-                            <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="stayArrangement" value="Fully-stayed (매 링크)" class="text-red-600 focus:ring-red-500 h-5 w-5">
-                                <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_stay-arrangement-every-chain-link.svg" class="thumb-icon h-10 w-auto" onclick="event.preventDefault(); openImageModal(this.src)" alt="Fully-stayed" title="클릭하여 확대">
-                                <span class="ml-3 text-gray-700">Fully-stayed (매 링크)</span>
+                        <div class="flex flex-col space-y-3 bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+                            <label class="flex items-center cursor-pointer w-full p-2 hover:bg-gray-50 rounded">
+                                <input type="radio" name="stayArrangement" value="Fully-stayed (매 링크)" class="text-red-600 focus:ring-red-500 h-6 w-6 flex-shrink-0">
+                                <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_stay-arrangement-every-chain-link.svg" class="thumb-icon h-10 w-auto ml-3 flex-shrink-0" onclick="event.preventDefault(); openImageModal(this.src)" alt="Fully-stayed" title="클릭하여 확대">
+                                <span class="ml-3 text-gray-700 text-sm">Fully-stayed (매 링크)</span>
                             </label>
-                            <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="stayArrangement" value="Half-stayed (2링크 마다)" class="text-red-600 focus:ring-red-500 h-5 w-5">
-                                <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_stay-arrangement-2nd-chain-link.svg" class="thumb-icon h-10 w-auto" onclick="event.preventDefault(); openImageModal(this.src)" alt="Half-stayed" title="클릭하여 확대">
-                                <span class="ml-3 text-gray-700">Half-stayed (2링크 마다)</span>
+                            <div class="border-t border-gray-100 my-1 no-print"></div>
+                            <label class="flex items-center cursor-pointer w-full p-2 hover:bg-gray-50 rounded">
+                                <input type="radio" name="stayArrangement" value="Half-stayed (2링크 마다)" class="text-red-600 focus:ring-red-500 h-6 w-6 flex-shrink-0">
+                                <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_stay-arrangement-2nd-chain-link.svg" class="thumb-icon h-10 w-auto ml-3 flex-shrink-0" onclick="event.preventDefault(); openImageModal(this.src)" alt="Half-stayed" title="클릭하여 확대">
+                                <span class="ml-3 text-gray-700 text-sm">Half-stayed (2링크 마다)</span>
                             </label>
                         </div>
-                        <div class="info-box mt-2 no-print">
+                        <div class="info-box mt-2 no-print text-xs">
                             <strong>Fully-stayed:</strong> 모든 링크에 크로스바가 장착됨.<br>
-                            <strong>Half-stayed:</strong> 2개의 링크마다 하나씩 장착됨 (Standard).<br>
-                            <span class="text-xs text-gray-500">* 특별한 요청이 없으면 일반적으로 Half-stayed가 적용됩니다.</span>
+                            <strong>Half-stayed:</strong> 2개의 링크마다 하나씩 장착됨 (Standard).
                         </div>
                     </div>
                 </div>
@@ -246,7 +345,7 @@
                 <h2 class="text-lg md:text-xl font-bold text-gray-800 section-header">3. 운전 조건</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div class="input-group">
-                        <div class="flex items-center mb-1">
+                        <div class="flex items-center mb-1 justify-between">
                             <label class="text-sm font-medium text-gray-700">이동 거리 (Stroke, <span class="math-symbol">Ls</span>) (mm)</label>
                             <img src="https://onlineengineer.de/img/bloecke_info/desc_img/lslv_freitragend.jpg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
                         </div>
@@ -254,7 +353,7 @@
                     </div>
 
                     <div class="input-group">
-                        <div class="flex items-center mb-1">
+                        <div class="flex items-center mb-1 justify-between">
                             <label class="text-sm font-medium text-gray-700">이동 속도 (m/s)</label>
                             <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_travel-velocity.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
                         </div>
@@ -267,7 +366,7 @@
                     </div>
 
                     <div class="input-group">
-                        <div class="flex items-center mb-1">
+                        <div class="flex items-center mb-1 justify-between">
                             <label class="text-sm font-medium text-gray-700">체인 길이 (브라켓 제외) (mm)</label>
                             <img src="https://onlineengineer.de/img/bloecke_info/info_lk.png" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
                         </div>
@@ -278,19 +377,19 @@
                          <label class="block text-sm font-medium text-gray-700 mb-2">설치 환경 및 재질</label>
                          <div class="bg-white p-4 rounded-lg border border-gray-200 grid grid-cols-1 gap-3">
                             <label class="flex items-center p-2 active:bg-gray-50 rounded cursor-pointer">
-                                <input type="checkbox" id="env_chip" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <input type="checkbox" id="env_chip" class="text-red-600 focus:ring-red-500 h-6 w-6">
                                 <span class="ml-3 text-gray-700">금속 칩(Chip) 발생</span>
                             </label>
                             <label class="flex items-center p-2 active:bg-gray-50 rounded cursor-pointer">
-                                <input type="checkbox" id="env_high_temp" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <input type="checkbox" id="env_high_temp" class="text-red-600 focus:ring-red-500 h-6 w-6">
                                 <span class="ml-3 text-gray-700">고온 환경 (60도 이상)</span>
                             </label>
                             <label class="flex items-center p-2 active:bg-gray-50 rounded cursor-pointer">
-                                <input type="checkbox" id="mat_sus" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <input type="checkbox" id="mat_sus" class="text-red-600 focus:ring-red-500 h-6 w-6">
                                 <span class="ml-3 text-gray-700">스테인리스(STS) 재질 필요</span>
                             </label>
                             <label class="flex items-center p-2 active:bg-gray-50 rounded cursor-pointer">
-                                <input type="checkbox" id="supp_gliding" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <input type="checkbox" id="supp_gliding" class="text-red-600 focus:ring-red-500 h-6 w-6">
                                 <span class="ml-3 text-gray-700">글라이딩(Gliding) 적용</span>
                             </label>
                          </div>
@@ -303,14 +402,14 @@
                 <h2 class="text-lg md:text-xl font-bold text-gray-800 section-header">4. 케이블 / 호스 사양</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div class="input-group">
-                        <div class="flex items-center mb-1">
+                        <div class="flex items-center mb-1 justify-between">
                             <label class="text-sm font-medium text-gray-700">케이블 총 중량 (kg/m)</label>
                             <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_additional-load.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
                         </div>
                         <input type="number" inputmode="decimal" step="0.1" id="cableTotalWeight" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
                     </div>
                     <div class="input-group">
-                        <div class="flex items-center mb-1">
+                        <div class="flex items-center mb-1 justify-between">
                             <label class="text-sm font-medium text-gray-700">호스 총 중량 (kg/m)</label>
                             <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_additional-load.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
                         </div>
@@ -337,34 +436,34 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">크로스바 (Stay) 종류</label>
                         <div class="grid grid-cols-1 gap-3 mb-4">
                             <label class="flex items-center bg-white p-3 border rounded-lg active:bg-gray-50 cursor-pointer shadow-sm">
-                                <input type="radio" name="crossbarType" value="RS (얇은 크로스바)" class="text-red-600 focus:ring-red-500 h-5 w-5">
-                                <img src="https://tsubaki-kabelschlepp.com/uploads/_processed_/a/b/csm_s_sx1250-rs-2_stay-variants_5f38df9e16.png" class="thumb-icon stay-thumb" onclick="event.preventDefault(); openImageModal(this.src)" title="클릭하여 확대">
+                                <input type="radio" name="crossbarType" value="RS (얇은 크로스바)" class="text-red-600 focus:ring-red-500 h-6 w-6 flex-shrink-0">
+                                <img src="https://tsubaki-kabelschlepp.com/uploads/_processed_/a/b/csm_s_sx1250-rs-2_stay-variants_5f38df9e16.png" class="thumb-icon stay-thumb ml-3 flex-shrink-0" onclick="event.preventDefault(); openImageModal(this.src)" title="클릭하여 확대">
                                 <span class="ml-3 text-sm text-gray-700">RS (얇은 크로스바)</span>
                             </label>
                             <label class="flex items-center bg-white p-3 border rounded-lg active:bg-gray-50 cursor-pointer shadow-sm">
-                                <input type="radio" name="crossbarType" value="RM (넓은 크로스바)" class="text-red-600 focus:ring-red-500 h-5 w-5">
-                                <img src="https://tsubaki-kabelschlepp.com/uploads/_processed_/9/1/csm_s_sx1250-rm_stay-variants_503a158e8d.png" class="thumb-icon stay-thumb" onclick="event.preventDefault(); openImageModal(this.src)" title="클릭하여 확대">
+                                <input type="radio" name="crossbarType" value="RM (넓은 크로스바)" class="text-red-600 focus:ring-red-500 h-6 w-6 flex-shrink-0">
+                                <img src="https://tsubaki-kabelschlepp.com/uploads/_processed_/9/1/csm_s_sx1250-rm_stay-variants_503a158e8d.png" class="thumb-icon stay-thumb ml-3 flex-shrink-0" onclick="event.preventDefault(); openImageModal(this.src)" title="클릭하여 확대">
                                 <span class="ml-3 text-sm text-gray-700">RM (넓은 크로스바)</span>
                             </label>
                             <label class="flex items-center bg-white p-3 border rounded-lg active:bg-gray-50 cursor-pointer shadow-sm">
-                                <input type="radio" name="crossbarType" value="LG (홀 스테이)" class="text-red-600 focus:ring-red-500 h-5 w-5">
-                                <img src="https://tsubaki-kabelschlepp.com/uploads/_processed_/d/9/csm_s_sx1250-lg_stay-variants_01_7dc192b5b2.png" class="thumb-icon stay-thumb" onclick="event.preventDefault(); openImageModal(this.src)" title="클릭하여 확대">
+                                <input type="radio" name="crossbarType" value="LG (홀 스테이)" class="text-red-600 focus:ring-red-500 h-6 w-6 flex-shrink-0">
+                                <img src="https://tsubaki-kabelschlepp.com/uploads/_processed_/d/9/csm_s_sx1250-lg_stay-variants_01_7dc192b5b2.png" class="thumb-icon stay-thumb ml-3 flex-shrink-0" onclick="event.preventDefault(); openImageModal(this.src)" title="클릭하여 확대">
                                 <span class="ml-3 text-sm text-gray-700">LG (홀 스테이)</span>
                             </label>
                             <label class="flex items-center bg-white p-3 border rounded-lg active:bg-gray-50 cursor-pointer shadow-sm">
-                                <input type="radio" name="crossbarType" value="기타" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <input type="radio" name="crossbarType" value="기타" class="text-red-600 focus:ring-red-500 h-6 w-6 flex-shrink-0">
                                 <span class="ml-3 text-sm text-gray-700">기타</span>
                             </label>
                         </div>
 
                         <!-- LG 홀 스테이 상세 치수 -->
                         <div class="input-group bg-gray-50 p-4 rounded-lg border border-gray-200">
-                            <div class="flex items-center mb-1">
+                            <div class="flex items-center mb-1 justify-between">
                                 <label class="text-sm font-medium text-gray-700">LG 홀 스테이 가공 치수</label>
                                 <img src="https://tsubaki-kabelschlepp.com/uploads/tx_tkg17pim/assets/images/cable-carriers/steel-line/s-sx-series/s-sx1250/s-sx1250-lg/us/s_sx1250_s_sx1250-lg_cross-section.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
                             </div>
                             <input type="text" id="lgHoleDimensions" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all" placeholder="예: 15, 20, 15, 10">
-                            <div class="info-box mt-2">
+                            <div class="info-box mt-2 text-xs">
                                 <strong>이동측(Moving Point)</strong>에서 고정측을 바라볼 때, <strong>좌측부터 우측 순서대로</strong> 기입.
                             </div>
                         </div>
@@ -372,7 +471,7 @@
 
                     <!-- 브라켓 방향 -->
                     <div>
-                        <div class="flex items-center mb-2">
+                        <div class="flex items-center mb-2 justify-between">
                             <label class="text-sm font-medium text-gray-700">브라켓 방향</label>
                             <img src="https://onlineengineer.de/img/groups_info/preview/preview_group_info_connection_element.png" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
                         </div>
@@ -412,13 +511,13 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">커버 밀폐 여부</label>
                         <div class="flex items-center space-x-6 bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
                             <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="coverType" value="오픈형" checked class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <input type="radio" name="coverType" value="오픈형" checked class="text-red-600 focus:ring-red-500 h-6 w-6">
                                 <span class="ml-3 text-gray-700">오픈형 (일반)</span>
                             </label>
                             <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="coverType" value="밀폐형" class="text-red-600 focus:ring-red-500 h-5 w-5">
-                                <img src="https://tsubaki-kabelschlepp.com/uploads/_processed_/8/2/csm_s_sx-series_s_sx-tubes_b74b99c51f.png" class="thumb-icon stay-thumb" onclick="event.preventDefault(); openImageModal(this.src)" title="클릭하여 확대">
-                                <span class="ml-3 text-gray-700">밀폐형 (튜브)</span>
+                                <input type="radio" name="coverType" value="밀폐형" class="text-red-600 focus:ring-red-500 h-6 w-6">
+                                <img src="https://tsubaki-kabelschlepp.com/uploads/_processed_/8/2/csm_s_sx-series_s_sx-tubes_b74b99c51f.png" class="thumb-icon stay-thumb ml-2" onclick="event.preventDefault(); openImageModal(this.src)" title="클릭하여 확대">
+                                <span class="ml-2 text-gray-700">밀폐형 (튜브)</span>
                             </label>
                         </div>
                     </div>
@@ -433,31 +532,27 @@
 
         </form>
 
-        <!-- Footer / Actions -->
-        <div class="bg-gray-100 p-5 md:p-6 border-t border-gray-200 sticky bottom-0 z-10 safe-area-bottom no-print">
-            <div class="flex flex-col space-y-3">
+        <!-- Footer / Actions (Un-Fixed, Natural Flow) -->
+        <div class="bg-gray-800 p-4 md:p-6 border-t border-gray-700 safe-area-bottom no-print">
+            <div class="max-w-4xl mx-auto flex flex-col space-y-3">
                 <div class="flex space-x-3">
-                    <button onclick="saveToLocal()" class="flex-1 bg-gray-600 active:bg-gray-700 text-white font-bold py-3 rounded-lg shadow-md transition duration-150 text-base">
+                    <button onclick="saveToLocal()" class="flex-1 bg-gray-600 active:bg-gray-500 text-white font-bold py-3 rounded-lg shadow transition text-sm">
                         임시 저장
                     </button>
-                    <button onclick="loadFromLocal()" class="flex-1 bg-green-600 active:bg-green-700 text-white font-bold py-3 rounded-lg shadow-md transition duration-150 text-base">
+                    <button onclick="loadFromLocal()" class="flex-1 bg-green-700 active:bg-green-600 text-white font-bold py-3 rounded-lg shadow transition text-sm">
                         불러오기
                     </button>
                 </div>
                 
                 <div class="flex space-x-3">
-                    <button onclick="resetForm()" class="flex-1 bg-red-600 active:bg-red-700 text-white font-bold py-3 rounded-lg shadow-md transition duration-150 text-base">
-                        초기화
-                    </button>
-                    <button onclick="sendEmail()" class="flex-1 bg-indigo-600 active:bg-indigo-700 text-white font-bold py-3 rounded-lg shadow-md transition duration-150 text-base">
+                    <button onclick="sendEmail()" class="flex-1 bg-indigo-700 active:bg-indigo-600 text-white font-bold py-3 rounded-lg shadow transition text-sm">
                         이메일 전송
                     </button>
+                    <button onclick="copyToClipboard()" class="flex-1 bg-blue-700 active:bg-blue-600 text-white font-bold py-3 rounded-lg shadow transition text-sm">
+                        텍스트 복사
+                    </button>
                 </div>
-
-                <button onclick="copyToClipboard()" class="w-full bg-blue-600 active:bg-blue-700 text-white font-bold py-4 rounded-lg shadow-md transition duration-150 text-lg flex justify-center items-center">
-                    <span>텍스트 복사 (공유용)</span>
-                </button>
-                <button onclick="window.print()" class="w-full bg-gray-700 active:bg-gray-800 text-white font-bold py-3 rounded-lg shadow-md transition duration-150 text-base">
+                <button onclick="window.print()" class="w-full bg-gray-700 active:bg-gray-600 text-gray-200 font-bold py-2 rounded-lg shadow transition text-xs">
                     PDF 저장 / 인쇄
                 </button>
             </div>
@@ -465,20 +560,31 @@
     </div>
 
     <!-- Notification Toast -->
-    <div id="toast" class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-2xl translate-y-[-100px] opacity-0 transition-all duration-300 z-50 text-sm font-bold flex items-center">
+    <div id="toast" class="fixed top-20 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl translate-y-[-150%] opacity-0 transition-all duration-300 z-50 text-sm font-bold flex items-center border border-gray-700">
         <span id="toastMessage">📋 클립보드에 복사되었습니다.</span>
     </div>
 
-    <!-- Image Modal -->
-    <div id="imageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 hidden" onclick="closeImageModal()">
-        <div class="relative max-w-3xl w-full mx-4">
-            <img id="modalImage" src="" alt="Detail View" class="w-full h-auto rounded-lg shadow-2xl border-2 border-white bg-white">
-            <button onclick="closeImageModal()" class="absolute -top-10 right-0 text-white text-3xl font-bold focus:outline-none">&times;</button>
+    <!-- Mobile-Optimized Image Modal -->
+    <div id="imageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 hidden p-4" onclick="closeImageModal()">
+        <div class="relative w-full max-w-lg bg-white rounded-lg overflow-hidden shadow-2xl" onclick="event.stopPropagation()">
+            <!-- Modal Header -->
+            <div class="bg-gray-100 px-4 py-3 flex justify-between items-center border-b">
+                <h3 class="font-bold text-gray-700">상세 이미지</h3>
+                <button onclick="closeImageModal()" class="text-gray-500 hover:text-red-600 p-2 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <!-- Image Content -->
+            <div class="p-2 bg-white flex justify-center items-center min-h-[200px]">
+                <img id="modalImage" src="" alt="Detail View" class="max-w-full max-h-[70vh] object-contain">
+            </div>
         </div>
     </div>
 
     <script>
-        // Data Extraction Function
+        // ... existing script functions ...
         function generateReportText() {
             const getValue = (id) => document.getElementById(id).value || '미기입';
             const getChecked = (id) => document.getElementById(id).checked ? '예' : '아니오';
@@ -586,15 +692,15 @@ ${memo}`;
 
         function sendEmail() {
             const reportText = generateReportText();
+            const recipient = "kskoreaco@gmail.com";
             const subject = encodeURIComponent("[KABELSCHLEPP] Drag Chain 현장 체크리스트");
             const body = encodeURIComponent(reportText);
-            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+            window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
         }
 
         function resetForm() {
             if (confirm("정말로 모든 입력 내용을 초기화하시겠습니까?")) {
                 document.getElementById('checklistForm').reset();
-                // Set default date again
                 document.getElementById('checkDate').valueAsDate = new Date();
                 showToast('🔄 입력 내용이 초기화되었습니다.');
             }
@@ -605,15 +711,15 @@ ${memo}`;
             const msgSpan = document.getElementById('toastMessage');
             msgSpan.innerText = message;
             
-            toast.classList.remove('translate-y-[-100px]', 'opacity-0');
+            toast.classList.remove('translate-y-[-150%]', 'opacity-0');
             toast.classList.add('translate-y-0', 'opacity-100');
             setTimeout(() => {
                 toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-[-100px]', 'opacity-0');
+                toast.classList.add('translate-y-[-150%]', 'opacity-0');
             }, 3000);
         }
 
-        // Image Modal Logic
+        // Image Modal Logic - improved for mobile
         function openImageModal(url) {
             const modal = document.getElementById('imageModal');
             const img = document.getElementById('modalImage');
@@ -658,7 +764,6 @@ ${memo}`;
 
             const data = JSON.parse(savedData);
             
-            // Restore IDs
             for (const [key, value] of Object.entries(data)) {
                 const el = document.getElementById(key);
                 if (el) {
@@ -670,8 +775,6 @@ ${memo}`;
                 }
             }
             
-            // Restore Radios (Name based)
-            // Need to handle radio groups separately since we saved them by name
             const radioGroups = ['stayArrangement', 'crossbarType', 'fixedBracket', 'movingBracket', 'coverType'];
             radioGroups.forEach(name => {
                 if (data[name]) {
@@ -686,6 +789,11 @@ ${memo}`;
         }
 
         document.getElementById('checkDate').valueAsDate = new Date();
+        // Update print date when printing
+        window.addEventListener('beforeprint', () => {
+            const now = new Date();
+            document.getElementById('printDate').innerText = now.toLocaleDateString() + " " + now.toLocaleTimeString();
+        });
     </script>
 </body>
 </html>
