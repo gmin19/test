@@ -3,219 +3,689 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- 검색 엔진 수집 차단 (Google, Naver 등) -->
     <meta name="robots" content="noindex, nofollow">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#3B82F6">
+    <meta name="googlebot" content="noindex">
     
-    <title>오키나와 가족 여행</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
-    <link rel="preconnect" href="https://unpkg.com">
-    <link rel="preconnect" href="https://www.gstatic.com">
-
+    <title>KABELSCHLEPP Drag Chain 체크리스트</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-
     <style>
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #F1F5F9; color: #1E293B; -webkit-tap-highlight-color: transparent; }
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            /* 모바일에서 탭 하이라이트 색상 변경 */
+            -webkit-tap-highlight-color: transparent;
+        }
+        .section-header {
+            border-bottom: 2px solid #dc2626; /* Kabelschlepp Red style */
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+        .info-box {
+            background-color: #f9fafb;
+            border-left: 4px solid #9ca3af;
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #4b5563;
+            line-height: 1.4;
+        }
+        .math-symbol {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            font-weight: bold;
+        }
+        /* 입력 필드 기본 스타일 (모바일 최적화: 16px 이상이어야 iOS 자동 확대 방지) */
+        input, select, textarea {
+            font-size: 16px !important; 
+        }
         
-        /* 메뉴 카드 스타일 */
-        .menu-card {
-            background-color: white; 
-            border-radius: 16px; 
-            padding: 14px 8px;
-            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
-            border: 1px solid #E2E8F0;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            text-align: center;
-            cursor: pointer; 
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            min-height: 95px;
+        /* 숫자 입력기 화살표 숨김 */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
         }
-        .menu-card:active { transform: scale(0.96); background-color: #F8FAFC; }
         
-        /* 아이콘 박스: 이모지 완벽한 중앙 정렬 */
-        .icon-box {
-            width: 38px; height: 38px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 8px;
-            padding: 0;
-            line-height: 1;
+        /* 라디오/체크박스 크기 키움 */
+        input[type=radio], input[type=checkbox] {
+            transform: scale(1.2);
+            margin-right: 0.5rem;
         }
-        .icon-box i { width: 20px; height: 20px; }
-
-        /* 날씨 위젯 스타일 */
-        .weather-widget {
-            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
-            color: white; border-radius: 20px; padding: 16px; margin-bottom: 20px;
-            box-shadow: 0 8px 12px -3px rgba(37, 99, 235, 0.3);
-            position: relative; overflow: hidden;
+        /* 썸네일 이미지 스타일 */
+        .thumb-icon {
+            height: 2rem; /* h-8 equivalent */
+            width: auto;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            margin-left: 0.5rem;
+            background-color: white;
+            padding: 2px;
         }
-        .weather-deco { position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+        .thumb-icon:hover {
+            opacity: 0.8;
+            border-color: #dc2626;
+        }
+        /* 크로스바 썸네일은 조금 더 크게 */
+        .stay-thumb {
+            height: 3rem; 
+            margin-left: 0.75rem;
+        }
+        
+        /* 인쇄 시 숨김 처리 */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background-color: white;
+            }
+            .max-w-4xl {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+            }
+            /* 인쇄 시 입력창 테두리 제거 및 텍스트만 보이게 조정 */
+            input, textarea {
+                border: none;
+                padding: 0;
+            }
+        }
     </style>
 </head>
-<body class="min-h-screen pb-6">
+<body class="bg-gray-100">
 
-    <div class="px-4 pt-6">
-        <div class="flex justify-between items-center mb-4">
-            <div>
-                <p class="text-slate-500 text-[11px] font-bold mb-0.5">2026.04.02 ~ 04.05</p>
-                <h1 class="text-xl font-black text-slate-800">오키나와 가족 여행 ✈️</h1>
-            </div>
-            <button onclick="checkAdmin()" class="bg-slate-200 p-2 rounded-full text-slate-600 focus:outline-none active:bg-slate-300 transition-colors">
-                <i data-lucide="settings" class="w-4 h-4"></i>
-            </button>
+    <div class="max-w-4xl mx-auto bg-white shadow-lg min-h-screen md:min-h-0 md:rounded-lg md:my-8 overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gray-800 text-white p-5 md:p-6 sticky top-0 z-10 shadow-md no-print">
+            <h1 class="text-xl md:text-3xl font-bold mb-1">KABELSCHLEPP 체크리스트</h1>
+            <p class="text-gray-400 text-xs md:text-sm">현장 확인용 모바일 최적화 양식</p>
+        </div>
+        
+        <!-- Print Only Header -->
+        <div class="hidden print:block p-6 text-center border-b-2 border-red-600 mb-4">
+            <h1 class="text-2xl font-bold">KABELSCHLEPP Drag Chain 현장 체크리스트</h1>
         </div>
 
-        <div class="weather-widget">
-            <div class="weather-deco"></div>
-            <div class="relative z-10">
-                <div class="flex justify-between items-start">
+        <form id="checklistForm" class="p-5 md:p-8 space-y-8">
+            
+            <!-- 1. 기본 정보 -->
+            <section>
+                <h2 class="text-lg md:text-xl font-bold text-gray-800 section-header">1. 기본 정보</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div class="input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">점검 일자</label>
+                        <input type="date" id="checkDate" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
+                    </div>
+                    <div class="input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">설비명 / 라인명</label>
+                        <input type="text" id="machineName" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all" placeholder="예: 가공센터 3호기">
+                    </div>
+                    <div class="input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">담당자</label>
+                        <input type="text" id="inspector" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. 치수 및 외형 정보 -->
+            <section>
+                <h2 class="text-lg md:text-xl font-bold text-gray-800 section-header">2. 치수 및 외형 정보</h2>
+                <p class="mb-4 text-sm text-gray-600 no-print">설치 공간 또는 기존 제품을 실측하여 기입합니다. 아이콘을 클릭하면 도면을 확대할 수 있습니다.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <!-- 내폭 (Inner Width) -->
+                    <div class="input-group">
+                        <div class="flex items-center mb-1">
+                            <label class="text-sm font-medium text-gray-700">내폭 (<span class="math-symbol">Bi</span>) (mm)</label>
+                            <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_Inner-width.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
+                        </div>
+                        <input type="number" inputmode="decimal" id="bi" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all" placeholder="숫자만 입력">
+                        <div class="info-box no-print">
+                            케이블이 놓일 <strong>실제 내부 너비</strong>입니다.
+                        </div>
+                    </div>
+
+                    <!-- 외폭 (Outer Width) -->
+                    <div class="input-group">
+                        <div class="flex items-center mb-1">
+                            <label class="text-sm font-medium text-gray-700">외폭 (<span class="math-symbol">Ba</span>) (mm)</label>
+                            <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_Outer-width.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
+                        </div>
+                        <input type="number" inputmode="decimal" id="ba" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
+                    </div>
+
+                    <!-- 내측 높이 (Inner Height) -->
+                    <div class="input-group">
+                        <div class="flex items-center mb-1">
+                            <label class="text-sm font-medium text-gray-700">내측 높이 (<span class="math-symbol">hi</span>) (mm)</label>
+                            <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_Inner-height.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
+                        </div>
+                        <input type="number" inputmode="decimal" id="hi" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
+                    </div>
+
+                    <!-- 외측 높이 (Outer Height) -->
+                    <div class="input-group">
+                        <div class="flex items-center mb-1">
+                            <label class="text-sm font-medium text-gray-700">외측 높이 (<span class="math-symbol">ha</span>) (mm)</label>
+                            <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_Outer-height.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
+                        </div>
+                        <input type="number" inputmode="decimal" id="ha" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
+                    </div>
+
+                    <!-- 곡률 반경 (Bending Radius) -->
+                    <div class="input-group">
+                        <div class="flex items-center mb-1">
+                            <label class="text-sm font-medium text-gray-700">곡률 반경 (<span class="math-symbol">KR</span>) (mm)</label>
+                            <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_bending-radius.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
+                        </div>
+                        <input type="number" inputmode="decimal" id="kr" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
+                        <div class="info-box no-print">
+                            모를 경우 우측의 <strong>전체 높이(H)</strong>를 측정하세요.
+                        </div>
+                    </div>
+
+                    <!-- 전체 높이 (H) -->
+                    <div class="input-group">
+                        <div class="flex items-center mb-1">
+                            <label class="text-sm font-medium text-gray-700">Drag Chain 전체 높이 (<span class="math-symbol">H</span>) (mm)</label>
+                            <img src="https://onlineengineer.de/img/groups_info/group_info_einbaumasse.png" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
+                        </div>
+                        <input type="number" inputmode="decimal" id="totalHeight" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
+                        <div class="info-box no-print">
+                            설치 상태에서 바닥부터 최고점까지의 높이입니다. (KR 추산용)
+                        </div>
+                    </div>
+
+                    <!-- 피치 (Pitch) -->
+                    <div class="input-group md:col-span-2">
+                        <div class="flex items-center mb-1">
+                            <label class="text-sm font-medium text-gray-700">피치 (<span class="math-symbol">P</span>) (mm)</label>
+                            <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_pitch.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
+                        </div>
+                        <input type="number" inputmode="decimal" id="pitch" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
+                        <div class="info-box no-print">
+                            핀과 핀 사이, 즉 <strong>링크 중심에서 다음 링크 중심간의 거리</strong>입니다.
+                        </div>
+                    </div>
+
+                    <!-- 크로스바 배열 (Stay Arrangement) -->
+                    <div class="input-group md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">크로스바 배열 (Stay Arrangement)</label>
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-3 sm:space-y-0 bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="stayArrangement" value="Fully-stayed (매 링크)" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_stay-arrangement-every-chain-link.svg" class="thumb-icon h-10 w-auto" onclick="event.preventDefault(); openImageModal(this.src)" alt="Fully-stayed" title="클릭하여 확대">
+                                <span class="ml-3 text-gray-700">Fully-stayed (매 링크)</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="stayArrangement" value="Half-stayed (2링크 마다)" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_stay-arrangement-2nd-chain-link.svg" class="thumb-icon h-10 w-auto" onclick="event.preventDefault(); openImageModal(this.src)" alt="Half-stayed" title="클릭하여 확대">
+                                <span class="ml-3 text-gray-700">Half-stayed (2링크 마다)</span>
+                            </label>
+                        </div>
+                        <div class="info-box mt-2 no-print">
+                            <strong>Fully-stayed:</strong> 모든 링크에 크로스바가 장착됨.<br>
+                            <strong>Half-stayed:</strong> 2개의 링크마다 하나씩 장착됨 (Standard).<br>
+                            <span class="text-xs text-gray-500">* 특별한 요청이 없으면 일반적으로 Half-stayed가 적용됩니다.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. 운전 조건 -->
+            <section>
+                <h2 class="text-lg md:text-xl font-bold text-gray-800 section-header">3. 운전 조건</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div class="input-group">
+                        <div class="flex items-center mb-1">
+                            <label class="text-sm font-medium text-gray-700">이동 거리 (Stroke, <span class="math-symbol">Ls</span>) (mm)</label>
+                            <img src="https://onlineengineer.de/img/bloecke_info/desc_img/lslv_freitragend.jpg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
+                        </div>
+                        <input type="number" inputmode="decimal" id="stroke" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
+                    </div>
+
+                    <div class="input-group">
+                        <div class="flex items-center mb-1">
+                            <label class="text-sm font-medium text-gray-700">이동 속도 (m/s)</label>
+                            <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_travel-velocity.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
+                        </div>
+                        <input type="number" inputmode="decimal" step="0.1" id="speed" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
+                    </div>
+
+                    <div class="input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">링크 수 (Links)</label>
+                        <input type="number" inputmode="numeric" id="linkCount" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all" placeholder="예: 50">
+                    </div>
+
+                    <div class="input-group">
+                        <div class="flex items-center mb-1">
+                            <label class="text-sm font-medium text-gray-700">체인 길이 (브라켓 제외) (mm)</label>
+                            <img src="https://onlineengineer.de/img/bloecke_info/info_lk.png" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
+                        </div>
+                        <input type="number" inputmode="decimal" id="chainLength" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
+                    </div>
+
+                    <div class="input-group md:col-span-2">
+                         <label class="block text-sm font-medium text-gray-700 mb-2">설치 환경 및 재질</label>
+                         <div class="bg-white p-4 rounded-lg border border-gray-200 grid grid-cols-1 gap-3">
+                            <label class="flex items-center p-2 active:bg-gray-50 rounded cursor-pointer">
+                                <input type="checkbox" id="env_chip" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <span class="ml-3 text-gray-700">금속 칩(Chip) 발생</span>
+                            </label>
+                            <label class="flex items-center p-2 active:bg-gray-50 rounded cursor-pointer">
+                                <input type="checkbox" id="env_high_temp" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <span class="ml-3 text-gray-700">고온 환경 (60도 이상)</span>
+                            </label>
+                            <label class="flex items-center p-2 active:bg-gray-50 rounded cursor-pointer">
+                                <input type="checkbox" id="mat_sus" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <span class="ml-3 text-gray-700">스테인리스(STS) 재질 필요</span>
+                            </label>
+                            <label class="flex items-center p-2 active:bg-gray-50 rounded cursor-pointer">
+                                <input type="checkbox" id="supp_gliding" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <span class="ml-3 text-gray-700">글라이딩(Gliding) 적용</span>
+                            </label>
+                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. 케이블 및 호스 사양 -->
+            <section>
+                <h2 class="text-lg md:text-xl font-bold text-gray-800 section-header">4. 케이블 / 호스 사양</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div class="input-group">
+                        <div class="flex items-center mb-1">
+                            <label class="text-sm font-medium text-gray-700">케이블 총 중량 (kg/m)</label>
+                            <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_additional-load.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
+                        </div>
+                        <input type="number" inputmode="decimal" step="0.1" id="cableTotalWeight" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
+                    </div>
+                    <div class="input-group">
+                        <div class="flex items-center mb-1">
+                            <label class="text-sm font-medium text-gray-700">호스 총 중량 (kg/m)</label>
+                            <img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_additional-load.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
+                        </div>
+                        <input type="number" inputmode="decimal" step="0.1" id="hoseTotalWeight" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all">
+                    </div>
+                    <div class="input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">케이블 외경 (mm)</label>
+                        <input type="text" id="cableDiameters" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all" placeholder="예: 10, 12, 15 (쉼표 구분)">
+                    </div>
+                    <div class="input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">호스 외경 (mm)</label>
+                        <input type="text" id="hoseDiameters" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all" placeholder="예: 20, 25 (쉼표 구분)">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. 구조 및 옵션 -->
+            <section>
+                <h2 class="text-lg md:text-xl font-bold text-gray-800 section-header">5. 구조 및 옵션</h2>
+                <div class="space-y-6">
+                    
+                    <!-- 크로스바 선택 -->
                     <div>
-                        <span class="bg-white/20 px-1.5 py-0.5 rounded text-[10px] font-bold backdrop-blur-sm">우리 숙소</span>
-                        <h2 class="text-base font-bold mt-1 leading-tight">레쿠 오키나와<br>스파 & 리조트</h2>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">크로스바 (Stay) 종류</label>
+                        <div class="grid grid-cols-1 gap-3 mb-4">
+                            <label class="flex items-center bg-white p-3 border rounded-lg active:bg-gray-50 cursor-pointer shadow-sm">
+                                <input type="radio" name="crossbarType" value="RS (얇은 크로스바)" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <img src="https://tsubaki-kabelschlepp.com/uploads/_processed_/a/b/csm_s_sx1250-rs-2_stay-variants_5f38df9e16.png" class="thumb-icon stay-thumb" onclick="event.preventDefault(); openImageModal(this.src)" title="클릭하여 확대">
+                                <span class="ml-3 text-sm text-gray-700">RS (얇은 크로스바)</span>
+                            </label>
+                            <label class="flex items-center bg-white p-3 border rounded-lg active:bg-gray-50 cursor-pointer shadow-sm">
+                                <input type="radio" name="crossbarType" value="RM (넓은 크로스바)" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <img src="https://tsubaki-kabelschlepp.com/uploads/_processed_/9/1/csm_s_sx1250-rm_stay-variants_503a158e8d.png" class="thumb-icon stay-thumb" onclick="event.preventDefault(); openImageModal(this.src)" title="클릭하여 확대">
+                                <span class="ml-3 text-sm text-gray-700">RM (넓은 크로스바)</span>
+                            </label>
+                            <label class="flex items-center bg-white p-3 border rounded-lg active:bg-gray-50 cursor-pointer shadow-sm">
+                                <input type="radio" name="crossbarType" value="LG (홀 스테이)" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <img src="https://tsubaki-kabelschlepp.com/uploads/_processed_/d/9/csm_s_sx1250-lg_stay-variants_01_7dc192b5b2.png" class="thumb-icon stay-thumb" onclick="event.preventDefault(); openImageModal(this.src)" title="클릭하여 확대">
+                                <span class="ml-3 text-sm text-gray-700">LG (홀 스테이)</span>
+                            </label>
+                            <label class="flex items-center bg-white p-3 border rounded-lg active:bg-gray-50 cursor-pointer shadow-sm">
+                                <input type="radio" name="crossbarType" value="기타" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <span class="ml-3 text-sm text-gray-700">기타</span>
+                            </label>
+                        </div>
+
+                        <!-- LG 홀 스테이 상세 치수 -->
+                        <div class="input-group bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <div class="flex items-center mb-1">
+                                <label class="text-sm font-medium text-gray-700">LG 홀 스테이 가공 치수</label>
+                                <img src="https://tsubaki-kabelschlepp.com/uploads/tx_tkg17pim/assets/images/cable-carriers/steel-line/s-sx-series/s-sx1250/s-sx1250-lg/us/s_sx1250_s_sx1250-lg_cross-section.svg" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
+                            </div>
+                            <input type="text" id="lgHoleDimensions" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all" placeholder="예: 15, 20, 15, 10">
+                            <div class="info-box mt-2">
+                                <strong>이동측(Moving Point)</strong>에서 고정측을 바라볼 때, <strong>좌측부터 우측 순서대로</strong> 기입.
+                            </div>
+                        </div>
                     </div>
-                    <div class="text-right">
-                        <i data-lucide="cloud-sun" class="w-7 h-7 text-yellow-300 ml-auto mb-1"></i>
-                        <span class="text-[11px] font-medium opacity-90">오키나와(나하)</span>
+
+                    <!-- 브라켓 방향 -->
+                    <div>
+                        <div class="flex items-center mb-2">
+                            <label class="text-sm font-medium text-gray-700">브라켓 방향</label>
+                            <img src="https://onlineengineer.de/img/groups_info/preview/preview_group_info_connection_element.png" class="thumb-icon" onclick="event.preventDefault(); openImageModal(this.src)" title="도면 보기">
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <span class="block text-xs font-bold text-gray-500 uppercase mb-3 border-b pb-1">고정측 (Fixed Point)</span>
+                                    <div class="flex space-x-6">
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="radio" name="fixedBracket" value="FA" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                            <span class="ml-2 text-sm text-gray-700">FA (외측)</span>
+                                        </label>
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="radio" name="fixedBracket" value="FI" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                            <span class="ml-2 text-sm text-gray-700">FI (내측)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="block text-xs font-bold text-gray-500 uppercase mb-3 border-b pb-1">이동측 (Moving Point)</span>
+                                    <div class="flex space-x-6">
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="radio" name="movingBracket" value="MA" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                            <span class="ml-2 text-sm text-gray-700">MA (외측)</span>
+                                        </label>
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="radio" name="movingBracket" value="MI" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                            <span class="ml-2 text-sm text-gray-700">MI (내측)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">커버 밀폐 여부</label>
+                        <div class="flex items-center space-x-6 bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="coverType" value="오픈형" checked class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <span class="ml-3 text-gray-700">오픈형 (일반)</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="coverType" value="밀폐형" class="text-red-600 focus:ring-red-500 h-5 w-5">
+                                <img src="https://tsubaki-kabelschlepp.com/uploads/_processed_/8/2/csm_s_sx-series_s_sx-tubes_b74b99c51f.png" class="thumb-icon stay-thumb" onclick="event.preventDefault(); openImageModal(this.src)" title="클릭하여 확대">
+                                <span class="ml-3 text-gray-700">밀폐형 (튜브)</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
-                <div class="mt-3 flex gap-2">
-                    <a href="javascript:void(0)" onclick="openRealTimeNavi('Lequ Okinawa Chatan Spa & Resort')" class="flex-1 bg-white text-blue-600 py-2 rounded-xl text-[11px] font-bold text-center flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-transform">
-                        <i data-lucide="navigation" class="w-3 h-3"></i> 가는 길
-                    </a>
-                    <a href="house.html" class="flex-1 bg-blue-500 text-white border border-white/30 py-2 rounded-xl text-[11px] font-bold text-center flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-transform">
-                        <i data-lucide="home" class="w-3 h-3"></i> 정보
-                    </a>
+            </section>
+
+            <!-- 메모 -->
+            <section>
+                <label class="block text-sm font-medium text-gray-700 mb-1">기타 특이사항 메모</label>
+                <textarea id="memo" rows="4" class="w-full border-gray-300 border rounded-lg p-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none shadow-sm transition-all" placeholder="예: 3일 내 긴급 교체 필요 등"></textarea>
+            </section>
+
+        </form>
+
+        <!-- Footer / Actions -->
+        <div class="bg-gray-100 p-5 md:p-6 border-t border-gray-200 sticky bottom-0 z-10 safe-area-bottom no-print">
+            <div class="flex flex-col space-y-3">
+                <div class="flex space-x-3">
+                    <button onclick="saveToLocal()" class="flex-1 bg-gray-600 active:bg-gray-700 text-white font-bold py-3 rounded-lg shadow-md transition duration-150 text-base">
+                        임시 저장
+                    </button>
+                    <button onclick="loadFromLocal()" class="flex-1 bg-green-600 active:bg-green-700 text-white font-bold py-3 rounded-lg shadow-md transition duration-150 text-base">
+                        불러오기
+                    </button>
                 </div>
+                
+                <div class="flex space-x-3">
+                    <button onclick="resetForm()" class="flex-1 bg-red-600 active:bg-red-700 text-white font-bold py-3 rounded-lg shadow-md transition duration-150 text-base">
+                        초기화
+                    </button>
+                    <button onclick="sendEmail()" class="flex-1 bg-indigo-600 active:bg-indigo-700 text-white font-bold py-3 rounded-lg shadow-md transition duration-150 text-base">
+                        이메일 전송
+                    </button>
+                </div>
+
+                <button onclick="copyToClipboard()" class="w-full bg-blue-600 active:bg-blue-700 text-white font-bold py-4 rounded-lg shadow-md transition duration-150 text-lg flex justify-center items-center">
+                    <span>텍스트 복사 (공유용)</span>
+                </button>
+                <button onclick="window.print()" class="w-full bg-gray-700 active:bg-gray-800 text-white font-bold py-3 rounded-lg shadow-md transition duration-150 text-base">
+                    PDF 저장 / 인쇄
+                </button>
             </div>
         </div>
     </div>
 
-    <main class="px-4 pb-8">
-        <div class="grid grid-cols-3 gap-2.5">
-            
-            <a href="schedule.html" class="menu-card bg-blue-50/50 border-blue-100">
-                <div class="icon-box bg-blue-100 text-blue-600">
-                    <i data-lucide="calendar-days"></i>
-                </div>
-                <h3 class="font-bold text-slate-700 text-xs">전체 일정</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">3박 4일 상세</p>
-            </a>
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-2xl translate-y-[-100px] opacity-0 transition-all duration-300 z-50 text-sm font-bold flex items-center">
+        <span id="toastMessage">📋 클립보드에 복사되었습니다.</span>
+    </div>
 
-            <a href="dining.html" class="menu-card">
-                <div class="icon-box bg-orange-50 text-orange-500">
-                    <i data-lucide="utensils"></i>
-                </div>
-                <h3 class="font-bold text-slate-700 text-xs">맛집 정보</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">아메리칸 빌리지 맛집</p>
-            </a>
-
-            <a href="place.html" class="menu-card">
-                <div class="icon-box bg-teal-50 text-teal-600">
-                    <i data-lucide="palmtree"></i>
-                </div>
-                <h3 class="font-bold text-slate-700 text-xs">관광지</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">북부/중부/남부</p>
-            </a>
-
-            <a href="shopping.html" class="menu-card">
-                <div class="icon-box bg-pink-50 text-pink-500">
-                    <i data-lucide="shopping-bag"></i>
-                </div>
-                <h3 class="font-bold text-slate-700 text-xs">쇼핑 리스트</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">선물 & 할인</p>
-            </a>
-
-            <a href="mapcode.html" class="menu-card">
-                <div class="icon-box bg-indigo-50 text-indigo-600">
-                    <i data-lucide="map-pin"></i>
-                </div>
-                <h3 class="font-bold text-slate-700 text-xs">맵코드</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">내비게이션 입력</p>
-            </a>
-
-            <a href="car.html" class="menu-card">
-                <div class="icon-box bg-slate-100 text-slate-600">
-                    <i data-lucide="car"></i>
-                </div>
-                <h3 class="font-bold text-slate-700 text-xs">렌터카</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">사고대처</p>
-            </a>
-
-            <a href="talk.html" class="menu-card">
-                <div class="icon-box bg-yellow-50 text-yellow-600">
-                    <i data-lucide="message-circle"></i>
-                </div>
-                <h3 class="font-bold text-slate-700 text-xs">일본어</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">상황별 회화</p>
-            </a>
-
-            <a href="lawson.html" class="menu-card">
-                <div class="icon-box bg-blue-50 text-blue-600">
-                    <i data-lucide="store"></i>
-                </div>
-                <h3 class="font-bold text-slate-700 text-xs">로손 편의점</h3>
-                <p class="text-[9px] text-slate-400 leading-tight mt-0.5">추천템 & 이용팁</p>
-            </a>
-
-            <a href="emergency.html" class="menu-card bg-red-50/50 border-red-100">
-                <div class="icon-box bg-white text-red-500 shadow-sm">
-                    <i data-lucide="siren"></i>
-                </div>
-                <h3 class="font-bold text-red-600 text-xs">긴급 연락</h3>
-                <p class="text-[9px] text-red-400 leading-tight mt-0.5">경찰서/영사관</p>
-            </a>
-
-            <a href="decalogue.html" class="menu-card col-span-3 flex-row gap-3 h-auto py-3 items-center justify-start px-4 bg-emerald-50/50 border-emerald-100">
-                <div class="icon-box bg-emerald-100 text-emerald-600 mb-0 w-8 h-8 rounded-full">
-                    <i data-lucide="scroll" class="w-4 h-4"></i>
-                </div>
-                <div class="text-left flex-1">
-                    <h3 class="font-bold text-slate-700 text-xs">여행 십계명</h3>
-                    <p class="text-[10px] text-slate-400">즐거운 가족 여행을 위한 약속 🤙</p>
-                </div>
-                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
-            </a>
-
+    <!-- Image Modal -->
+    <div id="imageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 hidden" onclick="closeImageModal()">
+        <div class="relative max-w-3xl w-full mx-4">
+            <img id="modalImage" src="" alt="Detail View" class="w-full h-auto rounded-lg shadow-2xl border-2 border-white bg-white">
+            <button onclick="closeImageModal()" class="absolute -top-10 right-0 text-white text-3xl font-bold focus:outline-none">&times;</button>
         </div>
-
-        <div id="global-apps-container" class="mt-4 pt-6 border-t border-slate-200"></div>
-
-    </main>
-
-    <script type="module" src="common.js"></script>
+    </div>
 
     <script>
-        // [수정됨] 비밀번호 'gggg'로 변경
-        function checkAdmin() {
-            const password = prompt("관리자 비밀번호를 입력하세요 (4자리)");
+        // Data Extraction Function
+        function generateReportText() {
+            const getValue = (id) => document.getElementById(id).value || '미기입';
+            const getChecked = (id) => document.getElementById(id).checked ? '예' : '아니오';
+            const getRadio = (name) => {
+                const checked = document.querySelector(`input[name="${name}"]:checked`);
+                return checked ? checked.value : '미선택';
+            };
+
+            const date = getValue('checkDate');
+            const machine = getValue('machineName');
+            const inspector = getValue('inspector');
+
+            const bi = getValue('bi');
+            const ba = getValue('ba');
+            const hi = getValue('hi');
+            const ha = getValue('ha');
+            const kr = getValue('kr');
+            const totalHeight = getValue('totalHeight');
+            const pitch = getValue('pitch');
+            const stayArrangement = getRadio('stayArrangement'); 
+
+            const stroke = getValue('stroke');
+            const speed = getValue('speed');
+            const linkCount = getValue('linkCount');
+            const chainLength = getValue('chainLength');
             
-            if (password === "gggg") {
-                location.href = "admin.html";
-            } else if (password !== null) { 
-                alert("비밀번호가 일치하지 않습니다.");
+            const env_chip = getChecked('env_chip');
+            const env_temp = getChecked('env_high_temp');
+            const mat_sus = getChecked('mat_sus');
+            const supp_gliding = getChecked('supp_gliding');
+
+            const cableTotalWeight = getValue('cableTotalWeight');
+            const hoseTotalWeight = getValue('hoseTotalWeight');
+            const cableDiameters = getValue('cableDiameters');
+            const hoseDiameters = getValue('hoseDiameters');
+
+            const crossbarType = getRadio('crossbarType');
+            const lgHoleSpecs = getValue('lgHoleDimensions');
+            const fixedBracket = getRadio('fixedBracket');
+            const movingBracket = getRadio('movingBracket');
+            const coverType = getRadio('coverType');
+            const memo = getValue('memo');
+
+            return `[KABELSCHLEPP Drag Chain 체크리스트]
+
+1. 기본 정보
+- 점검 일자: ${date}
+- 설비명: ${machine}
+- 담당자: ${inspector}
+
+2. 치수 정보
+- 내폭(Bi): ${bi} mm
+- 외폭(Ba): ${ba} mm
+- 내측 높이(hi): ${hi} mm
+- 외측 높이(ha): ${ha} mm
+- 곡률 반경(KR): ${kr} mm
+- 전체 높이(H): ${totalHeight} mm
+- 피치(P): ${pitch} mm
+- 크로스바 배열: ${stayArrangement}
+
+3. 운전 조건
+- 이동 거리(Stroke): ${stroke} mm
+- 이동 속도: ${speed} m/s
+- 링크 수: ${linkCount} EA
+- 체인 길이(브라켓 제외): ${chainLength} mm
+- 칩(Chip) 발생 환경: ${env_chip}
+- 고온 환경: ${env_temp}
+- STS 재질 필요: ${mat_sus}
+- 글라이딩 적용: ${supp_gliding}
+
+4. 케이블/호스 사양
+- 케이블 총 중량: ${cableTotalWeight} kg/m
+- 호스 총 중량: ${hoseTotalWeight} kg/m
+- 케이블 외경 목록: ${cableDiameters}
+- 호스 외경 목록: ${hoseDiameters}
+
+5. 구조 및 옵션
+- 크로스바 종류: ${crossbarType}
+- LG 홀 가공 치수: ${lgHoleSpecs}
+- 고정측 브라켓: ${fixedBracket}
+- 이동측 브라켓: ${movingBracket}
+- 커버 형태: ${coverType}
+
+6. 기타 메모
+${memo}`;
+        }
+
+        function copyToClipboard() {
+            const reportText = generateReportText();
+            const textarea = document.createElement('textarea');
+            textarea.value = reportText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            textarea.setSelectionRange(0, 99999); // 모바일 지원
+            
+            try {
+                document.execCommand('copy');
+                showToast('📋 클립보드에 복사되었습니다.');
+            } catch (err) {
+                console.error('복사 실패', err);
+                alert('복사에 실패했습니다. 수동으로 텍스트를 복사해주십시오.');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function sendEmail() {
+            const reportText = generateReportText();
+            const subject = encodeURIComponent("[KABELSCHLEPP] Drag Chain 현장 체크리스트");
+            const body = encodeURIComponent(reportText);
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        }
+
+        function resetForm() {
+            if (confirm("정말로 모든 입력 내용을 초기화하시겠습니까?")) {
+                document.getElementById('checklistForm').reset();
+                // Set default date again
+                document.getElementById('checkDate').valueAsDate = new Date();
+                showToast('🔄 입력 내용이 초기화되었습니다.');
             }
         }
 
-        // 실시간 네비게이션 함수
-        function openRealTimeNavi(destinationName) {
-            const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destinationName)}&travelmode=driving`;
-            window.open(url, '_blank');
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msgSpan = document.getElementById('toastMessage');
+            msgSpan.innerText = message;
+            
+            toast.classList.remove('translate-y-[-100px]', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-[-100px]', 'opacity-0');
+            }, 3000);
         }
-        
-        // 아이콘 로드
-        if (window.lucide) window.lucide.createIcons();
+
+        // Image Modal Logic
+        function openImageModal(url) {
+            const modal = document.getElementById('imageModal');
+            const img = document.getElementById('modalImage');
+            img.src = url;
+            modal.classList.remove('hidden');
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.add('hidden');
+        }
+
+        // Local Storage Logic
+        function saveToLocal() {
+            const inputs = document.querySelectorAll('input, select, textarea');
+            const data = {};
+            
+            inputs.forEach(el => {
+                 if (el.type === 'radio') {
+                     if (el.checked) data[el.name] = el.value;
+                 } else if (el.type === 'checkbox') {
+                     data[el.id] = el.checked;
+                 } else if (el.id) {
+                     data[el.id] = el.value;
+                 }
+            });
+            
+            try {
+                localStorage.setItem('kabelschlepp_checklist_data', JSON.stringify(data));
+                showToast('💾 기기에 임시 저장되었습니다.');
+            } catch (e) {
+                alert('저장에 실패했습니다. (브라우저 저장소 오류)');
+            }
+        }
+
+        function loadFromLocal() {
+            const savedData = localStorage.getItem('kabelschlepp_checklist_data');
+            if (!savedData) {
+                alert('저장된 데이터가 없습니다.');
+                return;
+            }
+
+            const data = JSON.parse(savedData);
+            
+            // Restore IDs
+            for (const [key, value] of Object.entries(data)) {
+                const el = document.getElementById(key);
+                if (el) {
+                    if (el.type === 'checkbox') {
+                        el.checked = value;
+                    } else if (el.type !== 'radio') {
+                        el.value = value;
+                    }
+                }
+            }
+            
+            // Restore Radios (Name based)
+            // Need to handle radio groups separately since we saved them by name
+            const radioGroups = ['stayArrangement', 'crossbarType', 'fixedBracket', 'movingBracket', 'coverType'];
+            radioGroups.forEach(name => {
+                if (data[name]) {
+                    const radios = document.getElementsByName(name);
+                    radios.forEach(r => {
+                        if (r.value === data[name]) r.checked = true;
+                    });
+                }
+            });
+
+            showToast('📂 저장된 데이터를 불러왔습니다.');
+        }
+
+        document.getElementById('checkDate').valueAsDate = new Date();
     </script>
-    
-    <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
 </body>
 </html>
