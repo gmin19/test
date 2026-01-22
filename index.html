@@ -237,26 +237,28 @@
                     <!-- 10. Stroke Img Update -->
                     <div>
                         <div class="flex justify-between mb-1"><label class="text-sm font-medium text-gray-700">이동 거리 (Ls)</label><img src="https://onlineengineer.de/img/bloecke_info/desc_img/lslv_freitragend.jpg" class="thumb-icon" onclick="openImageModal(this.src)"></div>
-                        <input type="number" id="stroke" class="w-full border-gray-300 border rounded-lg p-3">
+                        <input type="number" id="stroke" class="w-full border-gray-300 border rounded-lg p-3" placeholder="스트로크 (mm)">
                     </div>
                     <!-- 3. Speed Img Update -->
                     <div>
                         <div class="flex justify-between mb-1"><label class="text-sm font-medium text-gray-700">이동 속도</label><img src="https://tsubaki-kabelschlepp.com/typo3conf/ext/tkg17/Resources/Public/Images/Pictographs/picto_travel-velocity.svg" class="thumb-icon" onclick="openImageModal(this.src)"></div>
-                        <input type="number" step="0.1" id="speed" class="w-full border-gray-300 border rounded-lg p-3">
+                        <input type="number" step="0.1" id="speed" class="w-full border-gray-300 border rounded-lg p-3" placeholder="속도 (m/s)">
                     </div>
-                    <div><label class="block text-sm font-medium text-gray-700 mb-1">링크 수</label><input type="number" id="linkCount" class="w-full border-gray-300 border rounded-lg p-3"></div>
+                    <div><label class="block text-sm font-medium text-gray-700 mb-1">링크 수</label><input type="number" id="linkCount" class="w-full border-gray-300 border rounded-lg p-3" placeholder="EA"></div>
                     <!-- 11. Chain Length Img Update -->
                     <div>
                         <div class="flex justify-between mb-1"><label class="text-sm font-medium text-gray-700">체인 길이</label><img src="https://onlineengineer.de/img/bloecke_info/info_lk.png" class="thumb-icon" onclick="openImageModal(this.src)"></div>
-                        <input type="number" id="chainLength" class="w-full border-gray-300 border rounded-lg p-3">
+                        <input type="number" id="chainLength" class="w-full border-gray-300 border rounded-lg p-3" placeholder="브라켓 제외 체인 길이 (mm)">
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-2">환경 조건</label>
                         <div class="bg-white p-3 rounded border grid grid-cols-2 gap-2">
                             <label class="flex items-center"><input type="checkbox" id="env_chip" class="mr-2"> 칩 발생</label>
                             <label class="flex items-center"><input type="checkbox" id="env_high_temp" class="mr-2"> 고온</label>
-                            <label class="flex items-center"><input type="checkbox" id="mat_sus" class="mr-2"> STS 재질</label>
-                            <label class="flex items-center"><input type="checkbox" id="supp_gliding" class="mr-2"> 글라이딩</label>
+                            <!-- Terminology Update -->
+                            <label class="flex items-center"><input type="checkbox" id="mat_sus" class="mr-2"> Stainless Steel 필요</label>
+                            <!-- Terminology Update -->
+                            <label class="flex items-center"><input type="checkbox" id="supp_gliding" class="mr-2"> 글라이딩 어플리케이션</label>
                         </div>
                     </div>
                 </div>
@@ -305,7 +307,10 @@
                             <label class="flex items-center bg-white p-3 border rounded"><input type="radio" name="crossbarType" value="Other" class="mr-2"> 기타</label>
                         </div>
                     </div>
-                    <div><label class="block text-sm font-medium text-gray-700 mb-1">LG 홀 가공 치수</label><input type="text" id="lgHoleDimensions" class="w-full border-gray-300 border rounded-lg p-3"></div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">LG 홀 가공 치수</label>
+                        <input type="text" id="lgHoleDimensions" class="w-full border-gray-300 border rounded-lg p-3" placeholder="이동단→고정단 시점, 좌측부터 순서대로 기입">
+                    </div>
                     
                     <div class="grid grid-cols-2 gap-4">
                         <!-- 9. Bracket Imgs Update -->
@@ -425,8 +430,10 @@
                 <div style="display:flex; gap:10px; margin-top:2px; flex-wrap: wrap;">
                     <div class="p-checkbox-item"><span id="p_env_chip" class="p-check-box"></span><span class="text-[8pt] ml-1">칩 발생</span></div>
                     <div class="p-checkbox-item"><span id="p_env_high_temp" class="p-check-box"></span><span class="text-[8pt] ml-1">고온</span></div>
-                    <div class="p-checkbox-item"><span id="p_mat_sus" class="p-check-box"></span><span class="text-[8pt] ml-1">STS 재질</span></div>
-                    <div class="p-checkbox-item"><span id="p_supp_gliding" class="p-check-box"></span><span class="text-[8pt] ml-1">글라이딩</span></div>
+                    <!-- Terminology Update -->
+                    <div class="p-checkbox-item"><span id="p_mat_sus" class="p-check-box"></span><span class="text-[8pt] ml-1">Stainless Steel 필요</span></div>
+                    <!-- Terminology Update -->
+                    <div class="p-checkbox-item"><span id="p_supp_gliding" class="p-check-box"></span><span class="text-[8pt] ml-1">글라이딩 어플리케이션</span></div>
                 </div>
             </div>
         </div>
@@ -610,12 +617,14 @@
             textarea.value = reportText;
             document.body.appendChild(textarea);
             textarea.select();
-            textarea.setSelectionRange(0, 99999);
+            textarea.setSelectionRange(0, 99999); // 모바일 지원
+            
             try {
                 document.execCommand('copy');
                 showToast('📋 클립보드에 복사되었습니다.');
             } catch (err) {
-                alert('복사 실패');
+                console.error('복사 실패', err);
+                alert('복사에 실패했습니다. 수동으로 텍스트를 복사해주십시오.');
             }
             document.body.removeChild(textarea);
         }
