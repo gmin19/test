@@ -1,7 +1,7 @@
 /**
- * 베셀 & 레쿠 오키나와 쿠폰북 데이터 (최종 수정)
- * - 구글맵 링크(mapUrl) 포함
- * - Icons8 아이콘 적용
+ * 베셀 & 레쿠 오키나와 쿠폰북 데이터 (링크 오류 수정판)
+ * - 카드 클릭 시 실제 구글 지도 검색 결과로 이동하도록 mapUrl 수정됨
+ * - 검색어: 가게이름 + 오키나와 차탄
  */
 
 const couponData = [
@@ -15,7 +15,7 @@ const couponData = [
         hours: "런치 11:30~15:00 / 디너 17:30~21:30",
         location: "힐튼 호텔",
         icon: "buffet-breakfast",
-        mapUrl: "https://maps.app.goo.gl/search/Hilton+Okinawa+Chatan+Suriyun"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Hilton+Okinawa+Chatan+Resort+Suri+Yun"
     },
     {
         id: 2,
@@ -26,7 +26,7 @@ const couponData = [
         hours: "런치 11:30~15:00 / 디너 17:30~22:30",
         location: "힐튼 호텔",
         icon: "pizza",
-        mapUrl: "https://maps.app.goo.gl/search/Hilton+Okinawa+Chatan+Corrente"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Hilton+Okinawa+Chatan+Resort+Corrente"
     },
 
     // [2] 오키나와 요리
@@ -39,7 +39,7 @@ const couponData = [
         hours: "11:00 ~ 22:00",
         location: "데포 아일랜드 C동 2층",
         icon: "mexican-food",
-        mapUrl: "https://maps.app.goo.gl/search/Kijimuna+Depot+Island"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Kijimuna+Depot+Island"
     },
     {
         id: 4,
@@ -50,7 +50,7 @@ const couponData = [
         hours: "11:00 ~ 21:00",
         location: "데포 아일랜드 2층",
         icon: "noodles",
-        mapUrl: "https://maps.app.goo.gl/search/Kamezen+Shokudo"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Kamezen+Shokudo+Chatan"
     },
     {
         id: 5,
@@ -61,7 +61,7 @@ const couponData = [
         hours: "12:00 ~ 23:00",
         location: "디스토션 시사이드 3층",
         icon: "rice-bowl",
-        mapUrl: "https://maps.app.goo.gl/search/Churahama+Shokudo"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Churahama+Shokudo+Chatan"
     },
     {
         id: 6,
@@ -72,7 +72,7 @@ const couponData = [
         hours: "17:00 ~ 23:00",
         location: "시사이드 3층",
         icon: "sake",
-        mapUrl: "https://maps.app.goo.gl/search/Chatan+Dunchi"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Chatan+Dunchi"
     },
     {
         id: 7,
@@ -83,7 +83,7 @@ const couponData = [
         hours: "17:00 ~ 23:00",
         location: "데포 센트럴 2층",
         icon: "sake",
-        mapUrl: "https://maps.app.goo.gl/search/Mihama+Dunchi"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Mihama+Dunchi"
     },
     {
         id: 8,
@@ -94,7 +94,7 @@ const couponData = [
         hours: "17:00 ~ 23:00",
         location: "데포 센트럴 3층",
         icon: "music-note",
-        mapUrl: "https://maps.app.goo.gl/search/Kanasan-ya+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Kanasanya+Chatan"
     },
     {
         id: 9,
@@ -105,7 +105,7 @@ const couponData = [
         hours: "16:00 ~ 22:00",
         location: "레쿠 호텔 2층",
         icon: "rice-bowl",
-        mapUrl: "https://maps.app.goo.gl/search/Lequ+Okinawa+Shimanchu"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Shimanchu+Lequ+Okinawa"
     },
     {
         id: 10,
@@ -116,7 +116,7 @@ const couponData = [
         hours: "16:00 ~ 22:00",
         location: "차탄 (미하마 34-2)",
         icon: "onigiri",
-        mapUrl: "https://maps.app.goo.gl/search/Funka+Delica+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Funka+Delica+Chatan"
     },
     {
         id: 11,
@@ -127,7 +127,7 @@ const couponData = [
         hours: "11:00 ~ 21:00",
         location: "디스토션 시사이드 1층",
         icon: "seafood-noodles",
-        mapUrl: "https://maps.app.goo.gl/search/Okinawa+Soba+Kiseki"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Okinawa+Soba+Kiseki"
     },
 
     // [3] 스테이크 & 햄버거 & 카레
@@ -140,7 +140,7 @@ const couponData = [
         hours: "11:00 ~ 23:00",
         location: "데포 아일랜드 A동 2층",
         icon: "steak-medium",
-        mapUrl: "https://maps.app.goo.gl/search/Jumbo+Steak+Han's+Mihama"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Jumbo+Steak+Han's+Mihama"
     },
     {
         id: 13,
@@ -151,7 +151,7 @@ const couponData = [
         hours: "11:30 ~ 21:00",
         location: "데포 아일랜드 A동 2층",
         icon: "grill",
-        mapUrl: "https://maps.app.goo.gl/search/Steak+House+BB+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Steak+House+BB+Chatan"
     },
     {
         id: 14,
@@ -162,7 +162,7 @@ const couponData = [
         hours: "11:30 ~ 22:00",
         location: "구르메관 2층",
         icon: "chef-hat",
-        mapUrl: "https://maps.app.goo.gl/search/Captain's+Inn+Mihama"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Captain's+Inn+Mihama"
     },
     {
         id: 15,
@@ -173,7 +173,7 @@ const couponData = [
         hours: "17:00 ~ 23:00",
         location: "차탄 (미하마 51-2)",
         icon: "wine-glass",
-        mapUrl: "https://maps.app.goo.gl/search/Blue+Ocean+Steak+Okinawa"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Blue+Ocean+Steak+Okinawa"
     },
     {
         id: 16,
@@ -184,7 +184,7 @@ const couponData = [
         hours: "11:00 ~ 23:00",
         location: "앳 차탄 2층",
         icon: "cow",
-        mapUrl: "https://maps.app.goo.gl/search/Steak+House+88+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Steak+House+88+Chatan"
     },
     {
         id: 17,
@@ -195,7 +195,7 @@ const couponData = [
         hours: "11:30 ~ 22:00",
         location: "시사이드 4층",
         icon: "steak",
-        mapUrl: "https://maps.app.goo.gl/search/Seaside+Steak+Beefy's"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Seaside+Steak+Beefy's"
     },
     {
         id: 18,
@@ -206,7 +206,7 @@ const couponData = [
         hours: "11:00 ~ 23:00",
         location: "데포 센트럴 2층",
         icon: "steak-medium",
-        mapUrl: "https://maps.app.goo.gl/search/Jumbo+Steak+Han's+Depot+Central"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Jumbo+Steak+Han's+Depot+Central"
     },
     {
         id: 19,
@@ -217,7 +217,7 @@ const couponData = [
         hours: "11:00 ~ 21:00",
         location: "시사이드 1층",
         icon: "hamburger",
-        mapUrl: "https://maps.app.goo.gl/search/Chatan+Burger+Base+Atabies"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Chatan+Burger+Base+Atabies"
     },
     {
         id: 20,
@@ -228,7 +228,7 @@ const couponData = [
         hours: "11:00 ~ 22:00",
         location: "디스토션 패션 2층",
         icon: "hamburger",
-        mapUrl: "https://maps.app.goo.gl/search/Zetta+Burger+Market"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Zetta+Burger+Market"
     },
     {
         id: 21,
@@ -239,7 +239,7 @@ const couponData = [
         hours: "10:00 ~ 21:00",
         location: "시사이드 2층",
         icon: "beer",
-        mapUrl: "https://maps.app.goo.gl/search/Brual+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Brual+Chatan"
     },
     {
         id: 22,
@@ -250,7 +250,7 @@ const couponData = [
         hours: "11:00 ~ 19:30",
         location: "차탄 (미하마 51-3)",
         icon: "hamburger",
-        mapUrl: "https://maps.app.goo.gl/search/Naughty+By+Nature+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Naughty+By+Nature+Chatan"
     },
     {
         id: 23,
@@ -261,7 +261,7 @@ const couponData = [
         hours: "11:00 ~ 21:00",
         location: "데포 아일랜드 A동",
         icon: "curry",
-        mapUrl: "https://maps.app.goo.gl/search/Bollywood+Dreams+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Bollywood+Dreams+Okinawa"
     },
     {
         id: 24,
@@ -272,7 +272,7 @@ const couponData = [
         hours: "11:00 ~ 22:00",
         location: "디스토션 시사이드 2층",
         icon: "curry",
-        mapUrl: "https://maps.app.goo.gl/search/Horizon+Curry+Works"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Horizon+Curry+Works+Okinawa"
     },
     {
         id: 25,
@@ -283,7 +283,7 @@ const couponData = [
         hours: "11:00 ~ 21:30",
         location: "시사이드 스퀘어 1층",
         icon: "curry",
-        mapUrl: "https://maps.app.goo.gl/search/Bollywood+Jewel"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Bollywood+Jewel+Chatan"
     },
 
     // [4] 카페 & 디저트
@@ -296,7 +296,7 @@ const couponData = [
         hours: "08:00 ~ 22:00",
         location: "베셀 호텔 별관",
         icon: "coffee-to-go",
-        mapUrl: "https://maps.app.goo.gl/search/Vongo+and+Anchor"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Vongo+%26+Anchor"
     },
     {
         id: 27,
@@ -307,7 +307,7 @@ const couponData = [
         hours: "09:00 ~ 19:00",
         location: "오크 패션 2층",
         icon: "pancakes",
-        mapUrl: "https://maps.app.goo.gl/search/Seaside+Cafe+Hanon"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Seaside+Cafe+Hanon"
     },
     {
         id: 28,
@@ -318,7 +318,7 @@ const couponData = [
         hours: "09:30 ~ 22:00",
         location: "시사이드 1층",
         icon: "muffin",
-        mapUrl: "https://maps.app.goo.gl/search/Climax+Coffee+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Climax+Coffee+Chatan"
     },
     {
         id: 29,
@@ -329,7 +329,7 @@ const couponData = [
         hours: "15:00 ~ 24:00",
         location: "디스토션 시사이드 1층",
         icon: "cocktail",
-        mapUrl: "https://maps.app.goo.gl/search/Cafe+Bar+MaiMalu"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=MaiMalu+Chatan"
     },
     {
         id: 30,
@@ -340,7 +340,7 @@ const couponData = [
         hours: "07:00 ~ 22:00",
         location: "레쿠 호텔 1층",
         icon: "espresso-cup",
-        mapUrl: "https://maps.app.goo.gl/search/Zhyvago+Coffee+Roastery"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Zhyvago+Coffee+Roastery"
     },
     {
         id: 31,
@@ -351,7 +351,7 @@ const couponData = [
         hours: "11:00 ~ 22:00",
         location: "레쿠 호텔 1층",
         icon: "doughnut",
-        mapUrl: "https://maps.app.goo.gl/search/Caravana+Ice+Cream"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Caravana+Ice+Cream+Chatan"
     },
     {
         id: 32,
@@ -362,7 +362,7 @@ const couponData = [
         hours: "09:30 ~ 19:00",
         location: "디스토션 패션 2층",
         icon: "coffee-bean",
-        mapUrl: "https://maps.app.goo.gl/search/Oniyanma+Coffee"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Oniyanma+Coffee+Chatan"
     },
     {
         id: 33,
@@ -373,7 +373,7 @@ const couponData = [
         hours: "11:00 ~ 21:00",
         location: "시사이드 2층",
         icon: "ice-cream-cone",
-        mapUrl: "https://maps.app.goo.gl/search/Blue+Seal+Ice+Cream+Depot+Island"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Blue+Seal+Depot+Island+Seaside"
     },
     {
         id: 34,
@@ -384,7 +384,7 @@ const couponData = [
         hours: "10:00 ~ 18:00",
         location: "오크 패션 1층",
         icon: "cake",
-        mapUrl: "https://maps.app.goo.gl/search/Fukugiya+Baumkuchen"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Fukugiya+Baumkuchen+Chatan"
     },
     {
         id: 35,
@@ -395,7 +395,7 @@ const couponData = [
         hours: "11:00 ~ 20:00",
         location: "레쿠 호텔 1층",
         icon: "doughnut",
-        mapUrl: "https://maps.app.goo.gl/search/Kame+Andagi+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Kame+Andagi+Chatan"
     },
     {
         id: 36,
@@ -406,7 +406,7 @@ const couponData = [
         hours: "10:30 ~ 20:00",
         location: "데포 아일랜드 A동",
         icon: "green-tea",
-        mapUrl: "https://maps.app.goo.gl/search/Kamakura+Warabimochi"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Kamakura+Warabimochi+Chatan"
     },
     {
         id: 37,
@@ -417,7 +417,7 @@ const couponData = [
         hours: "08:00 ~ 20:00",
         location: "플라자 F",
         icon: "sandwich",
-        mapUrl: "https://maps.app.goo.gl/search/Cafe+Fruit+Bunbun"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Cafe+Fruits+Bunbun"
     },
 
     // [5] 일식 / 고기 / 해산물 / 양식
@@ -430,7 +430,7 @@ const couponData = [
         hours: "17:00 ~ 22:30",
         location: "차탄",
         icon: "pot",
-        mapUrl: "https://maps.app.goo.gl/search/Agu+no+Kakurega+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Agu+No+Kakurega+Chatan"
     },
     {
         id: 39,
@@ -441,7 +441,7 @@ const couponData = [
         hours: "11:30 ~ 23:00",
         location: "아메리칸 데포 C동",
         icon: "grill",
-        mapUrl: "https://maps.app.goo.gl/search/Hakata+Yakiniku+Tenjin"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Hakata+Yakiniku+Tenjin"
     },
     {
         id: 40,
@@ -452,7 +452,7 @@ const couponData = [
         hours: "11:00 ~ 23:00",
         location: "데포 아일랜드 E동",
         icon: "cow",
-        mapUrl: "https://maps.app.goo.gl/search/Yakiniku+Fukugyu"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Yakiniku+Fukugyu+Chatan"
     },
     {
         id: 41,
@@ -463,7 +463,7 @@ const couponData = [
         hours: "11:00 ~ 23:00",
         location: "차탄",
         icon: "crab",
-        mapUrl: "https://maps.app.goo.gl/search/Steam+Seafood+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Steam+Seafood+Chatan"
     },
     {
         id: 42,
@@ -474,7 +474,7 @@ const couponData = [
         hours: "17:00 ~ 23:00",
         location: "데포 센트럴 6층",
         icon: "meat",
-        mapUrl: "https://maps.app.goo.gl/search/Gyubushi+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Gyuubushi+Chatan"
     },
     {
         id: 43,
@@ -485,7 +485,7 @@ const couponData = [
         hours: "17:00 ~ 23:00",
         location: "디스토션 패션 2층",
         icon: "grill",
-        mapUrl: "https://maps.app.goo.gl/search/Yakiniku+Rikio"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Yakiniku+Rikio"
     },
     {
         id: 44,
@@ -496,7 +496,7 @@ const couponData = [
         hours: "영업시간 문의",
         location: "앳 차탄 1층",
         icon: "noodles",
-        mapUrl: "https://maps.app.goo.gl/search/Jiruya+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Jiruya+Chatan"
     },
     {
         id: 45,
@@ -507,7 +507,7 @@ const couponData = [
         hours: "07:30 ~ 22:00",
         location: "시사이드 스퀘어",
         icon: "cheese",
-        mapUrl: "https://maps.app.goo.gl/search/Sunrise+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Sunrise+Chatan"
     },
     {
         id: 46,
@@ -518,7 +518,7 @@ const couponData = [
         hours: "11:30 ~ 21:00",
         location: "앳 차탄 1층",
         icon: "steak",
-        mapUrl: "https://maps.app.goo.gl/search/Hamburg+Steak+Masuo"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Hamburg+Steak+Masuo"
     },
     {
         id: 47,
@@ -529,7 +529,7 @@ const couponData = [
         hours: "11:30 ~ 22:00",
         location: "베셀 호텔 별관",
         icon: "pizza",
-        mapUrl: "https://maps.app.goo.gl/search/Solis+Grande"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Solis+Grande+Chatan"
     },
     {
         id: 48,
@@ -540,7 +540,7 @@ const couponData = [
         hours: "11:00 ~ 22:00",
         location: "차탄",
         icon: "lobster",
-        mapUrl: "https://maps.app.goo.gl/search/Red+Lobster+Okinawa+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Red+Lobster+Okinawa+Chatan"
     },
     {
         id: 49,
@@ -551,7 +551,7 @@ const couponData = [
         hours: "17:00 ~ 21:30",
         location: "차탄",
         icon: "ribs",
-        mapUrl: "https://maps.app.goo.gl/search/Tony+Roma's+Mihama"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Tony+Roma's+Chatan"
     },
     {
         id: 50,
@@ -562,7 +562,7 @@ const couponData = [
         hours: "11:00 ~ 21:00",
         location: "차탄",
         icon: "spaghetti",
-        mapUrl: "https://maps.app.goo.gl/search/Capricciosa+Mihama"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Capricciosa+Chatan"
     },
     {
         id: 51,
@@ -573,7 +573,7 @@ const couponData = [
         hours: "10:00 ~ 21:00",
         location: "아메리칸 데포 B동",
         icon: "hot-dog",
-        mapUrl: "https://maps.app.goo.gl/search/Pocke+Farm+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Pocke+Farm+Chatan"
     },
     {
         id: 52,
@@ -584,7 +584,7 @@ const couponData = [
         hours: "10:00 ~ 21:00",
         location: "아메리칸 데포 B동",
         icon: "hot-dog",
-        mapUrl: "https://maps.app.goo.gl/search/Benson's+Hotdog"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Benson's+Hotdog+Chatan"
     },
     {
         id: 53,
@@ -595,7 +595,7 @@ const couponData = [
         hours: "11:00 ~ 22:00",
         location: "아메리칸 데포 B동",
         icon: "taco",
-        mapUrl: "https://maps.app.goo.gl/search/Taco+Loco+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Taco+Loco+Chatan"
     },
     {
         id: 54,
@@ -606,7 +606,7 @@ const couponData = [
         hours: "12:00 ~ 21:00",
         location: "데포 센트럴 2층",
         icon: "fried-chicken",
-        mapUrl: "https://maps.app.goo.gl/search/Chicken+House+Guts"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Chicken+Guts+Chatan"
     },
     {
         id: 55,
@@ -617,7 +617,7 @@ const couponData = [
         hours: "12:00 ~ 21:00",
         location: "차탄",
         icon: "elephant",
-        mapUrl: "https://maps.app.goo.gl/search/Paopao+The+Elephant"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Pao+Pao+The+Elephant+Chatan"
     },
     {
         id: 56,
@@ -628,7 +628,7 @@ const couponData = [
         hours: "18:00 ~ 23:00",
         location: "레쿠 호텔 1층",
         icon: "fish",
-        mapUrl: "https://maps.app.goo.gl/search/La+Pesciplina"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=La+Pesciplina+Chatan"
     },
     {
         id: 57,
@@ -639,7 +639,7 @@ const couponData = [
         hours: "11:00 ~ 22:00",
         location: "시사이드 1층",
         icon: "pizza",
-        mapUrl: "https://maps.app.goo.gl/search/Pizzeria+Bar+Ariccia"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Pizzeria+Bar+Ariccia"
     },
     {
         id: 58,
@@ -650,7 +650,7 @@ const couponData = [
         hours: "11:00 ~ 22:00",
         location: "데포 아일랜드 D동",
         icon: "cactus",
-        mapUrl: "https://maps.app.goo.gl/search/El+Paso+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Mexican+Food+El+Paso"
     },
 
     // [6] 이자카야 & 바
@@ -663,7 +663,7 @@ const couponData = [
         hours: "17:00 ~ 03:00",
         location: "오크 패션 2층",
         icon: "cocktail",
-        mapUrl: "https://maps.app.goo.gl/search/Cafe+and+Bar+Oh+Yeah"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Cafe+Bar+Oh+Yeah"
     },
     {
         id: 60,
@@ -674,7 +674,7 @@ const couponData = [
         hours: "17:00 ~ 02:00",
         location: "구르메관 2층",
         icon: "sake",
-        mapUrl: "https://maps.app.goo.gl/search/Izakaya+Sai+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Izakaya+Sai+Chatan"
     },
     {
         id: 61,
@@ -685,7 +685,7 @@ const couponData = [
         hours: "17:00 ~ 23:00",
         location: "앳 차탄 1층",
         icon: "beer",
-        mapUrl: "https://maps.app.goo.gl/search/Shirakawa+Shoten"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Shirakawa+Shoten+Chatan"
     },
     {
         id: 62,
@@ -696,7 +696,7 @@ const couponData = [
         hours: "17:00 ~ 01:00",
         location: "데포 센트럴 5층",
         icon: "beer-glass",
-        mapUrl: "https://maps.app.goo.gl/search/Irish+Pub+Howdy"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Irish+Pub+Howdy"
     },
 
     // [7] 쇼핑 - 의류 & 액세서리
@@ -709,7 +709,7 @@ const couponData = [
         hours: "10:00 ~ 21:00",
         location: "데포 아일랜드 B동",
         icon: "t-shirt",
-        mapUrl: "https://maps.app.goo.gl/search/Run+Oki"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Run+Oki+Chatan"
     },
     {
         id: 64,
@@ -720,7 +720,7 @@ const couponData = [
         hours: "11:00 ~ 21:00",
         location: "시사이드 스퀘어",
         icon: "t-shirt",
-        mapUrl: "https://maps.app.goo.gl/search/Respect+Clothing+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Respect+Chatan"
     },
     {
         id: 65,
@@ -731,7 +731,7 @@ const couponData = [
         hours: "11:00 ~ 20:00",
         location: "아메리칸 데포 B동",
         icon: "baby-onesie",
-        mapUrl: "https://maps.app.goo.gl/search/Skip+Kids+Clothing"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Skip+American+Depot"
     },
     {
         id: 66,
@@ -742,7 +742,7 @@ const couponData = [
         hours: "11:00 ~ 20:00",
         location: "데포 아일랜드",
         icon: "shirt",
-        mapUrl: "https://maps.app.goo.gl/search/Royal+Okinawa"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Royal+Okinawa+Chatan"
     },
     {
         id: 67,
@@ -753,7 +753,7 @@ const couponData = [
         hours: "10:00 ~ 22:00",
         location: "데포 아일랜드 C동",
         icon: "baseball-cap",
-        mapUrl: "https://maps.app.goo.gl/search/Flava+Hat+Shop"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Flava+Hat+Chatan"
     },
     {
         id: 68,
@@ -764,7 +764,7 @@ const couponData = [
         hours: "10:00 ~ 21:00",
         location: "디스토션 패션",
         icon: "dress",
-        mapUrl: "https://maps.app.goo.gl/search/Dazzle+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Dazzle+Chatan"
     },
     {
         id: 69,
@@ -775,7 +775,7 @@ const couponData = [
         hours: "11:00 ~ 19:00",
         location: "디스토션 시사이드",
         icon: "t-shirt",
-        mapUrl: "https://maps.app.goo.gl/search/Southern+Deli+Agoo"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Southern+Deli+Agoo"
     },
     {
         id: 70,
@@ -786,7 +786,7 @@ const couponData = [
         hours: "11:00 ~ 20:00",
         location: "데포 아일랜드 A동",
         icon: "crystal",
-        mapUrl: "https://maps.app.goo.gl/search/Choshichiya+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Choshichiya+Chatan"
     },
     {
         id: 71,
@@ -797,7 +797,7 @@ const couponData = [
         hours: "12:00 ~ 21:00",
         location: "데포 아일랜드 A동",
         icon: "gem-stone",
-        mapUrl: "https://maps.app.goo.gl/search/Amatsubu+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Amatsubu+Chatan"
     },
     {
         id: 72,
@@ -808,7 +808,7 @@ const couponData = [
         hours: "11:30 ~ 19:30",
         location: "시사이드 1층",
         icon: "pearl",
-        mapUrl: "https://maps.app.goo.gl/search/Southerly+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Southerly+Chatan"
     },
     {
         id: 73,
@@ -819,7 +819,7 @@ const couponData = [
         hours: "10:00 ~ 21:30",
         location: "디스토션 패션",
         icon: "starfish",
-        mapUrl: "https://maps.app.goo.gl/search/Splash+Okinawa"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Splash+Okinawa+Mihama"
     },
     {
         id: 74,
@@ -830,7 +830,7 @@ const couponData = [
         hours: "11:00 ~ 20:00",
         location: "데포 센트럴",
         icon: "crystal",
-        mapUrl: "https://maps.app.goo.gl/search/Choshichiya+Depot+Central"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Choshichiya+Depot+Central"
     },
     {
         id: 75,
@@ -841,7 +841,7 @@ const couponData = [
         hours: "11:00 ~ 21:00",
         location: "데포 아일랜드 A동",
         icon: "flower",
-        mapUrl: "https://maps.app.goo.gl/search/Ohana+Accessory"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Ohana+Accessory+Chatan"
     },
     {
         id: 76,
@@ -852,7 +852,7 @@ const couponData = [
         hours: "10:00 ~ 21:00",
         location: "데포 아일랜드 A동",
         icon: "necklace",
-        mapUrl: "https://maps.app.goo.gl/search/Lagoon+Okinawa"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Lagoon+Chatan"
     },
 
     // [8] 쇼핑 - 기념품 & 잡화
@@ -865,7 +865,7 @@ const couponData = [
         hours: "11:00 ~ 20:00",
         location: "시사이드 1층",
         icon: "shopping-bag",
-        mapUrl: "https://maps.app.goo.gl/search/Okinawa+Market"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Okinawa+Market+Chatan"
     },
     {
         id: 78,
@@ -876,7 +876,7 @@ const couponData = [
         hours: "10:00 ~ 22:00",
         location: "드래곤 팰리스",
         icon: "gift",
-        mapUrl: "https://maps.app.goo.gl/search/Okano+Ipponmatsu"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Okano+Ipponmatsu"
     },
     {
         id: 79,
@@ -887,7 +887,7 @@ const couponData = [
         hours: "09:30 ~ 21:30",
         location: "아메리칸 데포 A동",
         icon: "gift",
-        mapUrl: "https://maps.app.goo.gl/search/Okinawaya+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Okinawaya+American+Village"
     },
     {
         id: 80,
@@ -898,7 +898,7 @@ const couponData = [
         hours: "10:00 ~ 21:30",
         location: "아메리칸 데포 A동",
         icon: "bottle-of-water",
-        mapUrl: "https://maps.app.goo.gl/search/Okinawaya+Awamori"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Okinawaya+Awamori+Kura"
     },
     {
         id: 81,
@@ -909,7 +909,7 @@ const couponData = [
         hours: "11:00 ~ 20:00",
         location: "데포 센트럴",
         icon: "pineapple",
-        mapUrl: "https://maps.app.goo.gl/search/Pineapple+House+Okinawa"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Pineapple+Pineapple+Chatan"
     },
     {
         id: 82,
@@ -920,7 +920,7 @@ const couponData = [
         hours: "11:00 ~ 19:00",
         location: "데포 센트럴",
         icon: "japan-map",
-        mapUrl: "https://maps.app.goo.gl/search/Made+in+Okinawa+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Made+In+Okinawa+Chatan"
     },
     {
         id: 83,
@@ -931,7 +931,7 @@ const couponData = [
         hours: "10:00 ~ 21:00",
         location: "데포 아일랜드 A동",
         icon: "shopping-bag",
-        mapUrl: "https://maps.app.goo.gl/search/Depot+Island+Import"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Depot+Island+Import+Chatan"
     },
     {
         id: 84,
@@ -942,7 +942,7 @@ const couponData = [
         hours: "12:00 ~ 21:00",
         location: "데포 아일랜드 A동",
         icon: "wine-glass",
-        mapUrl: "https://maps.app.goo.gl/search/Mihama+Glass+Sora"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Glass+Gallery+Sora"
     },
     {
         id: 85,
@@ -953,7 +953,7 @@ const couponData = [
         hours: "10:30 ~ 20:00",
         location: "데포 아일랜드 B동",
         icon: "cosmetics",
-        mapUrl: "https://maps.app.goo.gl/search/Kaiyo+Soko+21"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Kaiyo+Soko+21"
     },
     {
         id: 86,
@@ -964,7 +964,7 @@ const couponData = [
         hours: "10:00 ~ 20:00",
         location: "데포 아일랜드",
         icon: "sake",
-        mapUrl: "https://maps.app.goo.gl/search/Yamachu+Honpo"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Yamachu+Honpo"
     },
     {
         id: 87,
@@ -975,7 +975,7 @@ const couponData = [
         hours: "11:00 ~ 20:00",
         location: "아메리칸 데포 C동",
         icon: "trousers",
-        mapUrl: "https://maps.app.goo.gl/search/SOHO+Okinawa"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=SOHO+Chatan"
     },
     {
         id: 88,
@@ -986,7 +986,7 @@ const couponData = [
         hours: "10:00 ~ 21:00",
         location: "아메리칸 데포 A동",
         icon: "jeans",
-        mapUrl: "https://maps.app.goo.gl/search/American+Depot+Okinawa"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=American+Depot+Okinawa"
     },
     {
         id: 89,
@@ -997,7 +997,7 @@ const couponData = [
         hours: "10:00 ~ 21:00",
         location: "데포 아일랜드 E동",
         icon: "wallet",
-        mapUrl: "https://maps.app.goo.gl/search/Leather+Base+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Leather+Base+Chatan"
     },
     {
         id: 90,
@@ -1008,7 +1008,7 @@ const couponData = [
         hours: "11:00 ~ 21:00",
         location: "데포 아일랜드 E동",
         icon: "carpenter",
-        mapUrl: "https://maps.app.goo.gl/search/Leather+and+Wood+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Leather+%26+Wood+Chatan"
     },
     {
         id: 91,
@@ -1019,7 +1019,7 @@ const couponData = [
         hours: "11:00 ~ 19:00",
         location: "차탄 (미하마 51-3)",
         icon: "gift",
-        mapUrl: "https://maps.app.goo.gl/search/Casarina+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Casarina+Chatan"
     },
     {
         id: 92,
@@ -1030,7 +1030,7 @@ const couponData = [
         hours: "12:00 ~ 19:00",
         location: "레쿠 호텔 1층",
         icon: "sun",
-        mapUrl: "https://maps.app.goo.gl/search/Nankoku+Zakka+Tida"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Nangoku+Zakka+Tida"
     },
     {
         id: 93,
@@ -1041,7 +1041,7 @@ const couponData = [
         hours: "10:00 ~ 20:00",
         location: "데포 아일랜드 A동",
         icon: "soap",
-        mapUrl: "https://maps.app.goo.gl/search/SuiSavon+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=SuiSavon+Shuri+Soap+Chatan"
     },
 
     // [9] 액티비티 & 놀거리
@@ -1054,7 +1054,7 @@ const couponData = [
         hours: "10:00 ~ 24:00",
         location: "시사이드 스퀘어",
         icon: "controller",
-        mapUrl: "https://maps.app.goo.gl/search/GiGO+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=GiGO+Chatan"
     },
     {
         id: 95,
@@ -1065,7 +1065,7 @@ const couponData = [
         hours: "10:00 ~ 24:00",
         location: "시사이드 스퀘어",
         icon: "bowling",
-        mapUrl: "https://maps.app.goo.gl/search/Energy+Big+Bowl"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Enagic+Bowl+Chatan"
     },
     {
         id: 96,
@@ -1076,7 +1076,7 @@ const couponData = [
         hours: "10:00 ~ 24:00",
         location: "드래곤 팰리스",
         icon: "arcade",
-        mapUrl: "https://maps.app.goo.gl/search/Joy+Jungle+Okinawa"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Joy+Jungle+Chatan"
     },
     {
         id: 97,
@@ -1087,7 +1087,7 @@ const couponData = [
         hours: "07:00 ~ 23:00",
         location: "비치 타워 인근",
         icon: "sauna",
-        mapUrl: "https://maps.app.goo.gl/search/Terme+Villa+Churayu"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Terme+VILLA+Chula-u"
     },
     {
         id: 98,
@@ -1098,7 +1098,7 @@ const couponData = [
         hours: "12:00 ~ 19:00",
         location: "차탄",
         icon: "dog",
-        mapUrl: "https://maps.app.goo.gl/search/La+Leia+Pet+Hotel"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=La+Leia+Chatan"
     },
     {
         id: 99,
@@ -1109,7 +1109,7 @@ const couponData = [
         hours: "17:00 ~ 23:00",
         location: "데포 센트럴 4층",
         icon: "magician",
-        mapUrl: "https://maps.app.goo.gl/search/Magic+Ocean+Okinawa"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Magic+Ocean+Okinawa"
     },
 
     // [10] 뷰티 & 스파
@@ -1122,7 +1122,7 @@ const couponData = [
         hours: "11:00 ~ 19:30",
         location: "차탄 빌라 1층",
         icon: "massage",
-        mapUrl: "https://maps.app.goo.gl/search/Healing+Forest+Shuro"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Healing+Forest+Shuro"
     },
     {
         id: 101,
@@ -1133,7 +1133,7 @@ const couponData = [
         hours: "11:00 ~ 20:00",
         location: "시사이드 2층",
         icon: "makeup",
-        mapUrl: "https://maps.app.goo.gl/search/M-Grace's+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=M-Grace's+Chatan"
     },
     {
         id: 102,
@@ -1144,7 +1144,7 @@ const couponData = [
         hours: "10:00 ~ 20:00",
         location: "디스토션 시사이드",
         icon: "nail-polish",
-        mapUrl: "https://maps.app.goo.gl/search/Love+Nail+Okinawa"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Love+Nail+Okinawa"
     },
     {
         id: 103,
@@ -1155,7 +1155,7 @@ const couponData = [
         hours: "13:00 ~ 22:00",
         location: "레쿠 호텔 8층",
         icon: "spa-flower",
-        mapUrl: "https://maps.app.goo.gl/search/Celeste+Spa+Lequ"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Celeste+Spa+Lequ+Okinawa"
     },
     {
         id: 104,
@@ -1166,7 +1166,7 @@ const couponData = [
         hours: "11:00 ~ 20:00",
         location: "데포 아일랜드 E동",
         icon: "flip-flops",
-        mapUrl: "https://maps.app.goo.gl/search/Okichu"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Okichu+Chatan"
     },
     {
         id: 105,
@@ -1177,7 +1177,7 @@ const couponData = [
         hours: "12:00 ~ 21:00",
         location: "아메리칸 데포 C동",
         icon: "hair-clip",
-        mapUrl: "https://maps.app.goo.gl/search/Mihama+Garasu+Kanzashiya"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Kanzashiya+wargo+Okinawa"
     },
     {
         id: 106,
@@ -1188,7 +1188,7 @@ const couponData = [
         hours: "10:00 ~ 21:00",
         location: "데포 센트럴",
         icon: "water-drop",
-        mapUrl: "https://maps.app.goo.gl/search/Ryu+Spa+Chatan"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Ryu+Spa+Chatan"
     },
     {
         id: 107,
@@ -1199,7 +1199,7 @@ const couponData = [
         hours: "08:00 ~ 20:00",
         location: "온나손 (예약)",
         icon: "scuba-diving",
-        mapUrl: "https://maps.app.goo.gl/search/Sword+Fish+Okinawa"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Sword+Fish+Okinawa"
     },
     {
         id: 108,
@@ -1210,6 +1210,6 @@ const couponData = [
         hours: "11:00 ~ 18:00",
         location: "레쿠 호텔 1층",
         icon: "bicycle",
-        mapUrl: "https://maps.app.goo.gl/search/Shuhari+Bike+Works"
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Shuhari+Bike+Works"
     }
 ];

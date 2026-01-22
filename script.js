@@ -43,14 +43,18 @@ function renderCoupons(data) {
     }
 
     data.forEach(item => {
-        const card = document.createElement('div');
+        // [핵심 수정] div 대신 a 태그 생성
+        const card = document.createElement('a');
         card.className = 'coupon-card';
+        
+        // 카드 클릭 시 구글 지도로 이동 (새 탭)
+        card.href = item.mapUrl;
+        card.target = "_blank"; 
         
         const iconName = item.icon ? item.icon : 'shop';
         const iconUrl = `https://img.icons8.com/color/96/${iconName}.png`;
         const simpleLocation = item.location.replace('차탄쵸 미하마', '').trim();
 
-        // [수정] 맵 버튼 추가
         card.innerHTML = `
             <div class="card-icon-box">
                 <img src="${iconUrl}" alt="${item.name}" 
@@ -65,7 +69,6 @@ function renderCoupons(data) {
                 <div class="store-info">
                     📍 ${simpleLocation}<br>
                     ⏰ ${item.hours}
-                    <a href="${item.mapUrl}" target="_blank" class="map-btn">지도 보기</a>
                 </div>
             </div>
         `;

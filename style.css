@@ -86,7 +86,9 @@ h1 {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* 4. 쿠폰 리스트 (기존 유지) */
+/* ... (위쪽 body, header, controls 등은 기존과 동일) ... */
+
+/* 쿠폰 리스트 그리드 */
 #coupon-list {
     padding: 15px;
     display: grid;
@@ -94,6 +96,7 @@ h1 {
     gap: 12px;
 }
 
+/* [핵심 수정] div였던 카드를 a태그로 바꾸면서 스타일 조정 */
 .coupon-card {
     background: white;
     border-radius: 12px;
@@ -101,9 +104,21 @@ h1 {
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
+    
+    /* 링크 스타일 제거 */
+    text-decoration: none; 
+    color: inherit; 
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* 아이콘 박스 */
+/* 마우스 올리거나 터치했을 때 살짝 떠오르는 효과 */
+.coupon-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ... (아래쪽 아이콘 박스 등 나머지는 기존과 동일) ... */
 .card-icon-box {
     width: 100%;
     height: 90px;
@@ -121,7 +136,6 @@ h1 {
     filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.1));
 }
 
-/* 카드 내용 */
 .card-body {
     padding: 12px;
     flex-grow: 1;
@@ -142,6 +156,7 @@ h1 {
     font-weight: bold;
     margin: 0 0 6px 0;
     line-height: 1.3;
+    color: #333; /* 링크 색상 방지 */
 }
 
 .store-desc {
@@ -164,23 +179,4 @@ h1 {
     line-height: 1.4;
 }
 
-/* ... 기존 코드 맨 아래에 추가 ... */
-
-.map-btn {
-    display: inline-block;
-    margin-top: 8px;
-    padding: 6px 12px;
-    background-color: #4285F4; /* 구글 지도 파란색 */
-    color: white;
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: bold;
-    border-radius: 4px;
-    text-align: center;
-    width: 100%; /* 버튼을 꽉 차게 */
-    box-sizing: border-box;
-}
-
-.map-btn:hover {
-    background-color: #357ae8;
-}
+/* [삭제됨] .map-btn 스타일은 더 이상 필요 없습니다. */
