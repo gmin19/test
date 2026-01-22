@@ -163,3 +163,24 @@ h1 {
     margin-top: auto;
     line-height: 1.4;
 }
+
+/* ... 기존 코드 맨 아래에 추가 ... */
+
+.map-btn {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 6px 12px;
+    background-color: #4285F4; /* 구글 지도 파란색 */
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 4px;
+    text-align: center;
+    width: 100%; /* 버튼을 꽉 차게 */
+    box-sizing: border-box;
+}
+
+.map-btn:hover {
+    background-color: #357ae8;
+}

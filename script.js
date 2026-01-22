@@ -5,13 +5,14 @@ const filterBtns = document.querySelectorAll('.filter-btn');
 
 let currentFilters = { keyword: '', category: 'all', location: '' };
 
-// 데이터 로드 확인
+// 초기 실행
 if (typeof couponData === 'undefined') {
     listContainer.innerHTML = "<p style='padding:20px'>데이터 로드 실패</p>";
 } else {
     renderCoupons(couponData);
 }
 
+// 필터링 로직
 function applyFilters() {
     const filtered = couponData.filter(item => {
         const matchKeyword = 
@@ -29,7 +30,7 @@ function applyFilters() {
     renderCoupons(filtered);
 }
 
-// [핵심 수정] span 태그 대신 img 태그를 생성하는 함수
+// 렌더링 함수
 function renderCoupons(data) {
     listContainer.innerHTML = '';
 
@@ -45,15 +46,11 @@ function renderCoupons(data) {
         const card = document.createElement('div');
         card.className = 'coupon-card';
         
-        // 아이콘 이름이 없으면 기본값 'shop'
         const iconName = item.icon ? item.icon : 'shop';
-        
-        // [중요] Icons8 이미지 주소 생성
         const iconUrl = `https://img.icons8.com/color/96/${iconName}.png`;
-
-        // 주소 간소화
         const simpleLocation = item.location.replace('차탄쵸 미하마', '').trim();
 
+        // [수정] 맵 버튼 추가
         card.innerHTML = `
             <div class="card-icon-box">
                 <img src="${iconUrl}" alt="${item.name}" 
@@ -68,6 +65,7 @@ function renderCoupons(data) {
                 <div class="store-info">
                     📍 ${simpleLocation}<br>
                     ⏰ ${item.hours}
+                    <a href="${item.mapUrl}" target="_blank" class="map-btn">지도 보기</a>
                 </div>
             </div>
         `;
