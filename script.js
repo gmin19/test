@@ -5,14 +5,13 @@ const filterBtns = document.querySelectorAll('.filter-btn');
 
 let currentFilters = { keyword: '', category: 'all', location: '' };
 
-// 초기 실행
+// 데이터 로드 확인
 if (typeof couponData === 'undefined') {
     listContainer.innerHTML = "<p style='padding:20px'>데이터 로드 실패</p>";
 } else {
     renderCoupons(couponData);
 }
 
-// 필터링 로직
 function applyFilters() {
     const filtered = couponData.filter(item => {
         const matchKeyword = 
@@ -30,7 +29,7 @@ function applyFilters() {
     renderCoupons(filtered);
 }
 
-// 렌더링 함수 (Icons8 버전)
+// [핵심 수정] span 태그 대신 img 태그를 생성하는 함수
 function renderCoupons(data) {
     listContainer.innerHTML = '';
 
@@ -46,10 +45,10 @@ function renderCoupons(data) {
         const card = document.createElement('div');
         card.className = 'coupon-card';
         
-        // 데이터에 아이콘 이름이 없으면 'shop' 사용
+        // 아이콘 이름이 없으면 기본값 'shop'
         const iconName = item.icon ? item.icon : 'shop';
         
-        // Icons8 컬러 아이콘 URL 생성 (크기 96px)
+        // [중요] Icons8 이미지 주소 생성
         const iconUrl = `https://img.icons8.com/color/96/${iconName}.png`;
 
         // 주소 간소화
@@ -76,7 +75,7 @@ function renderCoupons(data) {
     });
 }
 
-// 이벤트 리스너 (기존과 동일)
+// 이벤트 리스너
 searchInput.addEventListener('input', (e) => {
     currentFilters.keyword = e.target.value.toLowerCase();
     applyFilters();
