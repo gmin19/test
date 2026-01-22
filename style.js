@@ -1,121 +1,101 @@
-/* 기본 설정 */
-body {
-    font-family: 'Noto Sans KR', sans-serif;
-    margin: 0;
-    background-color: #f5f5f5;
-    color: #333;
+const listContainer = document.getElementById('coupon-list');
+const searchInput = document.getElementById('search-input');
+const locationSelect = document.getElementById('location-select'); // 건물 선택 추가
+const filterBtns = document.querySelectorAll('.filter-btn');
+
+// 현재 필터 상태를 저장하는 객체
+let currentFilters = {
+    keyword: '',
+    category: 'all',
+    location: ''
+};
+
+// 1. 초기 렌더링
+renderCoupons(couponData);
+
+// 2. 통합 필터링 함수 (핵심 로직)
+function applyFilters() {
+    const filtered = couponData.filter(item => {
+        // A. 키워드 검색 (이름, 설명, 혜택 내용)
+        const matchKeyword = 
+            item.name.toLowerCase().includes(currentFilters.keyword) || 
+            item.desc.toLowerCase().includes(currentFilters.keyword) ||
+            item.benefit.toLowerCase().includes(currentFilters.keyword);
+
+        // B. 카테고리 필터
+        const matchCategory = 
+            currentFilters.category === 'all' || 
+            item.category === currentFilters.category;
+
+        // C. 건물 위치 필터 (부분 일치)
+        // 예: '데포 아일랜드' 선택 시 '데포 아일랜드 빌딩 A동'도 포함됨
+        const matchLocation = 
+            currentFilters.location === '' || 
+            item.location.includes(currentFilters.location);
+
+        return matchKeyword && matchCategory && matchLocation;
+    });
+
+    renderCoupons(filtered);
 }
 
-/* 상단 고정 헤더 */
-.sticky-header {
-    position: sticky;
-    top: 0;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    z-index: 1000;
-    text-align: center;
-}
+// 3. 이벤트 리스너 등록
 
-.notice {
-    background-color: #ff4757; /* 강조색: 빨강 */
-    color: white;
-    padding: 8px;
-    font-size: 14px;
-    font-weight: bold;
-}
+// 검색어 입력 시
+searchInput.addEventListener('input', (e) => {
+    currentFilters.keyword = e.target.value.toLowerCase();
+    applyFilters();
+});
 
-h1 {
-    margin: 10px 0;
-    font-size: 18px;
-}
+// 건물 선택 변경 시
+locationSelect.addEventListener('change', (e) => {
+    currentFilters.location = e.target.value;
+    applyFilters();
+});
 
-/* 검색 및 필터 영역 */
-.controls {
-    padding: 15px;
-    background-color: white;
-}
+// 카테고리 버튼 클릭 시
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        // 버튼 활성화 스타일 변경
+        filterBtns.forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
 
-#search-input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-sizing: border-box; /* 패딩 포함 크기 계산 */
-    font-size: 16px;
-    margin-bottom: 10px;
-}
+        // 필터 상태 업데이트
+        currentFilters.category = e.target.getAttribute('data-category');
+        applyFilters();
+    });
+});
 
-.categories {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto; /* 모바일에서 가로 스크롤 가능하게 */
-    white-space: nowrap;
-    padding-bottom: 5px;
-}
+// 4. 렌더링 함수 (동일하지만 HTML 구조에 맞춰 최적화)
+function renderCoupons(data) {
+    listContainer.innerHTML = '';
 
-.filter-btn {
-    padding: 8px 16px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    background: white;
-    cursor: pointer;
-    font-size: 14px;
-}
+    if (data.length === 0) {
+        listContainer.innerHTML = '<p style="grid-column: 1 / -1; text-align:center; padding:20px; color:#666;">조건에 맞는 매장이 없습니다.</p>';
+        return;
+    }
 
-.filter-btn.active {
-    background-color: #333;
-    color: white;
-    border-color: #333;
-}
+    data.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'coupon-card';
+        
+        const imgDisplay = item.image ? 
+            `<img src="${item.image}" alt="${item.name}" class="card-img" loading="lazy">` : 
+            '<div class="card-img" style="background:#ddd;"></div>';
 
-/* 쿠폰 리스트 (카드 UI) */
-#coupon-list {
-    padding: 15px;
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 반응형 그리드 */
-}
-
-.coupon-card {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    transition: transform 0.2s;
-}
-
-.coupon-card:active {
-    transform: scale(0.98); /* 터치 시 살짝 눌리는 효과 */
-}
-
-.card-img {
-    width: 100%;
-    height: 150px;
-    background-color: #eee; /* 이미지 로딩 전 회색 배경 */
-    object-fit: cover;
-}
-
-.card-body {
-    padding: 15px;
-}
-
-.benefit-tag {
-    color: #ff4757;
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 5px;
-    display: block;
-}
-
-.store-name {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 0 0 5px 0;
-}
-
-.store-info {
-    font-size: 13px;
-    color: #666;
-    margin-top: 10px;
-    line-height: 1.5;
+        card.innerHTML = `
+            ${imgDisplay}
+            <div class="card-body">
+                <div>
+                    <span class="benefit-tag">${item.benefit}</span>
+                    <h2 class="store-name">${item.name}</h2>
+                    <p class="store-desc">${item.desc}</p>
+                </div>
+                <div class="store-info">
+                    📍 ${item.location.replace('차탄쵸 미하마', '')} <br> ⏰ ${item.hours.split('/')[0]}... </div>
+            </div>
+        `;
+        // 클릭 시 구글 검색 등으로 연결하려면 여기에 이벤트 추가 가능
+        listContainer.appendChild(card);
+    });
 }
