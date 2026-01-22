@@ -1,56 +1,42 @@
-// DOM 요소 가져오기
 const listContainer = document.getElementById('coupon-list');
 const searchInput = document.getElementById('search-input');
 const locationSelect = document.getElementById('location-select');
 const filterBtns = document.querySelectorAll('.filter-btn');
 
-// 필터 상태 변수
-let currentFilters = {
-    keyword: '',
-    category: 'all',
-    location: ''
-};
+let currentFilters = { keyword: '', category: 'all', location: '' };
 
-// 페이지 로드 시 실행
-// 만약 couponData가 정의되지 않았다면 오류 메시지 출력 (안전장치)
+// 초기 실행
 if (typeof couponData === 'undefined') {
-    console.error("오류: data.js 파일이 로드되지 않았습니다.");
-    listContainer.innerHTML = "<p>데이터를 불러올 수 없습니다. data.js 경로를 확인해주세요.</p>";
+    listContainer.innerHTML = "<p style='padding:20px'>데이터 로드 실패</p>";
 } else {
-    // 정상 로드 시 초기 렌더링 실행
     renderCoupons(couponData);
 }
 
-// 필터링 함수
+// 필터링 로직
 function applyFilters() {
     const filtered = couponData.filter(item => {
         const matchKeyword = 
             item.name.toLowerCase().includes(currentFilters.keyword) || 
             item.desc.toLowerCase().includes(currentFilters.keyword) ||
             item.benefit.toLowerCase().includes(currentFilters.keyword);
-
         const matchCategory = 
             currentFilters.category === 'all' || 
             item.category === currentFilters.category;
-
         const matchLocation = 
             currentFilters.location === '' || 
             item.location.includes(currentFilters.location);
-
         return matchKeyword && matchCategory && matchLocation;
     });
-
     renderCoupons(filtered);
 }
 
-// 렌더링 함수 (아이콘 방식)
+// 렌더링 함수 (Icons8 버전)
 function renderCoupons(data) {
     listContainer.innerHTML = '';
 
     if (data.length === 0) {
         listContainer.innerHTML = `
-            <div style="grid-column: 1 / -1; text-align:center; padding:30px; color:#999;">
-                <span class="material-symbols-outlined" style="font-size:36px; margin-bottom:10px;">search_off</span>
+            <div style="grid-column: 1 / -1; text-align:center; padding:40px; color:#999;">
                 <p>조건에 맞는 매장이 없습니다.</p>
             </div>`;
         return;
@@ -60,14 +46,19 @@ function renderCoupons(data) {
         const card = document.createElement('div');
         card.className = 'coupon-card';
         
-        // 아이콘이 없으면 기본값 'store' 사용
-        const iconName = item.icon ? item.icon : 'store';
-        // 주소 간소화 (반복되는 지명 제거)
+        // 데이터에 아이콘 이름이 없으면 'shop' 사용
+        const iconName = item.icon ? item.icon : 'shop';
+        
+        // Icons8 컬러 아이콘 URL 생성 (크기 96px)
+        const iconUrl = `https://img.icons8.com/color/96/${iconName}.png`;
+
+        // 주소 간소화
         const simpleLocation = item.location.replace('차탄쵸 미하마', '').trim();
 
         card.innerHTML = `
             <div class="card-icon-box">
-                <span class="material-symbols-outlined">${iconName}</span>
+                <img src="${iconUrl}" alt="${item.name}" 
+                     onerror="this.src='https://img.icons8.com/color/96/shop.png'">
             </div>
             <div class="card-body">
                 <div>
@@ -85,17 +76,15 @@ function renderCoupons(data) {
     });
 }
 
-// 이벤트 리스너 설정
+// 이벤트 리스너 (기존과 동일)
 searchInput.addEventListener('input', (e) => {
     currentFilters.keyword = e.target.value.toLowerCase();
     applyFilters();
 });
-
 locationSelect.addEventListener('change', (e) => {
     currentFilters.location = e.target.value;
     applyFilters();
 });
-
 filterBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
         filterBtns.forEach(b => b.classList.remove('active'));
