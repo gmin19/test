@@ -2,45 +2,48 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>베셀 & 레쿠 오키나와 쿠폰북</title>
-    
-    <link rel="stylesheet" href="style.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>이온몰 라이카무 모바일 쇼핑 지도</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="sticky-header">
-        <div class="notice">🔑 결제 시 룸 키를 보여주세요</div>
-        <h1>제휴 매장 쿠폰북</h1>
-    </header>
+    <div class="app-container">
+        
+        <main id="map-view" class="map-view">
+            <div id="zoom-wrapper" class="zoom-wrapper">
+                <img id="current-floor-map" src="assets/maps/map-1f.svg" alt="이온몰 라이카무 1층 지도">
+                
+                <div id="poi-layer" class="poi-layer hidden"></div>
+            </div>
+        </main>
 
-    <div class="controls">
-        <input type="text" id="search-input" placeholder="매장명 검색 (예: 스테이크)">
-        <select id="location-select">
-            <option value="">🏢 모든 건물 보기</option>
-            <option value="데포 아일랜드">데포 아일랜드 (A~E동)</option>
-            <option value="시사이드">데포 아일랜드 시사이드</option>
-            <option value="아메리칸 데포">아메리칸 데포 (A~C동)</option>
-            <option value="데포 센트럴">데포 센트럴</option>
-            <option value="디스토션">디스토션 (패션/시사이드)</option>
-            <option value="레쿠">레쿠 호텔</option>
-            <option value="힐튼">힐튼 호텔</option>
-            <option value="이온">이온몰 / 기타</option>
-        </select>
-        <div class="categories">
-            <button class="filter-btn active" data-category="all">전체</button>
-            <button class="filter-btn" data-category="맛집">맛집</button>
-            <button class="filter-btn" data-category="카페">카페</button>
-            <button class="filter-btn" data-category="쇼핑">쇼핑</button>
-            <button class="filter-btn" data-category="뷰티">뷰티</button>
-            <button class="filter-btn" data-category="액티비티">액티비티</button>
+        <nav class="floor-selector">
+            <button class="floor-btn" data-floor="5">5F</button>
+            <button class="floor-btn" data-floor="4">4F</button>
+            <button class="floor-btn" data-floor="3">3F</button>
+            <button class="floor-btn" data-floor="2">2F</button>
+            <button class="floor-btn active" data-floor="1">1F</button>
+        </nav>
+
+        <div class="floating-controls">
+            <button id="toggle-amenities" class="fab-btn">편의시설 보기</button>
         </div>
+
+        <section id="bottom-sheet" class="bottom-sheet hidden">
+            <div class="sheet-handle"></div>
+            <div class="sheet-content">
+                <h2 id="store-name">매장 이름</h2>
+                <p id="store-category" class="category">카테고리</p>
+                <p id="store-time" class="time">영업시간</p>
+                <p id="store-desc" class="desc">매장에 대한 간략한 설명이 들어갈 자리입니다.</p>
+                <button id="close-sheet" class="close-btn">닫기</button>
+            </div>
+        </section>
+
     </div>
 
-    <main id="coupon-list"></main>
-
-    <script src="data.js"></script>
-    <script src="script.js"></script>
+    <script src="js/panzoom.min.js"></script>
+    <script src="js/map-controller.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
